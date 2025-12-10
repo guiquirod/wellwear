@@ -1,0 +1,57 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #LANDING
+\*------------------------------------*/
+
+.landing {
+  min-height: 100vh;
+  background: linear-gradient($color-gradient);
+  background-size: 400% 400%;
+  animation: gradientMove 8s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__sub-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: $color-primary-grey;
+    font-family: Doto;
+    cursor: default;
+    
+    @media (min-width: $maxLMobileWidth) {
+      font-size: 24px;
+    }
+  }
+
+  &__text {
+    font-size: 60px;
+    font-weight: 700;
+    margin: 0;
+    font-family: Museo Moderno;
+    transition: font-weight 1s ease-in-out;
+    cursor: default;
+
+    @media (min-width: $maxLMobileWidth) {
+      font-size: 120px;
+    }
+  }
+
+  &__text:hover {
+    font-weight: 100;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}

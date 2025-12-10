@@ -1,0 +1,31 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #GARMENT-BUTTON
+\*------------------------------------*/
+
+.add-garment-button {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  background-color: $color-secondary;
+  cursor: pointer;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $color-secondary;
+  }
+
+  &__icon {
+    font-size: 48px;
+    color: $color-secondary-grey;
+  }
+
+  &__info-text {
+    padding-top: 0.5rem;
+  }
+}

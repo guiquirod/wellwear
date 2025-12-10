@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #ALER-MODAL-WRAPPER
+\*------------------------------------*/
+
+.alert-modal-wrapper {
+  inset: 0;
+  position: fixed;
+  background: $color-secondary-grey;
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+/*------------------------------------*\
+  #ALER-MODAL
+\*------------------------------------*/
+
+.alert-modal {
+  width: 40%;
+  max-height: 80vh;
+  background: linear-gradient($color-gradient);
+  padding: 2rem;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+
+  &___section-title {
+    font-family: 'IBM Plex Sans';
+    text-align: center;
+    font-size: 18px;
+    padding-top: 12px;
+    padding-inline: 12px;
+  }
+}

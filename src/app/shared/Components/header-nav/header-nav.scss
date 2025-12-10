@@ -1,0 +1,167 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #HEADER-NAV
+\*------------------------------------*/
+
+.header-nav {
+  view-transition-name: header-nav;
+  margin-bottom: 2rem;
+
+  &__mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    background: $color-secondary;
+    border: 1px solid $color-primary-text;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+
+    @media (min-width: $maxLMobileWidth) {
+      display: none;
+    }
+  }
+
+  &__mobile-toggle-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+
+  &__mobile-toggle-icon--open {
+    transform: rotate(180deg);
+  }
+
+  &__mobile-menu {
+    display: flex;
+    flex-flow: column nowrap;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    @media (min-width: $maxLMobileWidth) {
+      display: none;
+    }
+  }
+
+  &__mobile-menu--open {
+    max-height: 500px;
+  }
+
+  &__mobile-option {
+    padding: 1rem;
+    margin: 0;
+    background: $color-secondary;
+    border: 1px solid $color-primary-text;
+    border-top: none;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  &__mobile-option:hover {
+    background: $color-primary;
+    color: $color-secondary-text;
+  }
+
+  &__mobile-option--active {
+    background: $color-primary;
+    color: $color-secondary-text;
+  }
+
+  &__mobile-option--logout {
+    color: $color-error;
+  }
+
+  &__container {
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+    width: 100%;
+    z-index: 9;
+
+    @media (min-width: $maxLMobileWidth) {
+      display: grid;
+    }
+  }
+
+  &__option {
+    align-content: center;
+    background: $color-secondary;
+    border: 1px solid $color-primary-text;
+    height: 71px;
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-primary-text;
+    z-index: 1;
+  }
+
+  &__option::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: $color-primary;
+    transition: height 0.4s ease;
+    z-index: -1;
+  }
+
+  &__option:hover::before {
+    height: 100%;
+  }
+
+  &__option:hover {
+    color: $color-secondary-text;
+  }
+
+  &__option--active {
+    background: $color-primary;
+    color: $color-secondary-text;
+  }
+
+  &__option--active::before {
+    height: 100%;
+  }
+
+  &__option--logout {
+    background: none;
+  }
+
+  &__option--logout::after {
+    content: 'Logout';
+    color: $color-secondary-text;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 3;
+  }
+
+  &__option--logout:hover::after {
+    opacity: 1;
+  }
+
+  &__logout-icon {
+    width: 60px;
+    height: 60px;
+    z-index: 1;
+  }
+}

@@ -1,0 +1,15 @@
+@if (open) {
+<div class="alert-modal-wrapper" (click)="close.emit()">
+    <div class="alert-modal" (click)="$event.stopPropagation()">
+        <h2 class="alert-modal__section-title">{{title}}</h2>
+        <app-button 
+        [title]=firstButtonText
+        (action)="pickOption(true)"
+        ></app-button>
+        <app-button 
+        [title]=secondButtonText
+        (action)="pickOption(false)"
+        ></app-button>
+    </div>
+</div>
+}

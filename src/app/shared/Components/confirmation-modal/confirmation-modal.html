@@ -1,0 +1,23 @@
+@if (open) {
+<div class="confirmation-modal-wrapper" (click)="close.emit()">
+  <div class="confirmation-modal" (click)="$event.stopPropagation()">
+    <div class="confirmation-modal__content">
+      @if (title) {
+        <h2 class="confirmation-modal__title">{{ title }}</h2>
+      }
+      @if (message) {
+        <p class="confirmation-modal__message">{{ message }}</p>
+      }
+      <div class="confirmation-modal__actions">
+        @for (option of options; track option.value) {
+          <app-button
+            [title]="option.label"
+            (action)="selectOption(option.value)"
+          >
+          </app-button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+}

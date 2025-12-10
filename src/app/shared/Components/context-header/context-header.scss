@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #CONTEXT-HEADER
+\*------------------------------------*/
+
+.context-header {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  padding: 20px;
+  justify-content: space-between;
+
+   &__row {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3rem;
+   }
+
+   &__season {
+    font-size: 24px;
+    justify-content: flex-start;
+   }
+
+  &__date {
+    font-size: 48px;
+  }
+
+  &__corner {
+    position: absolute;
+    z-index: 1;
+    border-left: 2px $color-primary-text solid;
+    border-top: 2px $color-primary-text solid;
+    top: 0;
+    left: 0;
+    width: 17px;
+    height: 14px;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+    &__corner--alt {
+    position: absolute;
+    z-index: 1;
+    border-right: 2px $color-primary-text solid;
+    border-bottom: 2px $color-primary-text solid;
+    bottom: 0;
+    right: 0;
+    width: 17px;
+    height: 14px;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+}

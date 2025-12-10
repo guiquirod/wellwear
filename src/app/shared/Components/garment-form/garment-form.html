@@ -1,0 +1,106 @@
+@if(open) {
+<div class="garment-form-modal-wrapper" (click)="closeForm()">
+  <div class="garment-form" (click)="$event.stopPropagation()" [formGroup]="form">
+    <app-button
+      [title]="getTypeButtonTitle() | titlecase"
+      rightIcon="assets/icons/arrow_alt.png"
+      (action)="openTypeModal()"
+    >
+    </app-button>
+
+    <app-dropdown-button
+      title="Seleccionar tejidos"
+      rightIcon="assets/icons/arrow_alt.png"
+      [options]="fabricOptions"
+      [selectedOptions]="selectedFabrics"
+      [(isOpen)]="fabricDropdownOpen"
+      (isOpenChange)="onFabricDropdownToggle($event)"
+      (selectionChange)="onFabricChange($event)"
+    >
+    </app-dropdown-button>
+
+    <app-dropdown-button
+      title="Seleccionar temporadas"
+      [options]="seasonOptions"
+      [selectedOptions]="selectedSeasons"
+      [(isOpen)]="seasonDropdownOpen"
+      (isOpenChange)="onSeasonDropdownToggle($event)"
+      (selectionChange)="onSeasonChange($event)"
+    >
+    </app-dropdown-button>
+
+    <app-dropdown-button
+      title="Seleccionar longitud"
+      [options]="lengthOptions"
+      [selectedOptions]="selectedLength ? [selectedLength] : []"
+      [singleSelection]="true"
+      [(isOpen)]="lengthDropdownOpen"
+      (isOpenChange)="onLengthDropdownToggle($event)"
+      (selectionChange)="onLengthChange($event)"
+    >
+    </app-dropdown-button>
+
+    <div class="garment-form__file-container">
+      <input
+        type="file"
+        accept="image/jpeg,image/jpg,image/png,image/webp"
+        (change)="onFileSelected($event)"
+        class="garment-form__file-input"
+      />
+      @if (selectedFileName) {
+        <span class="garment-form__file-name">{{ selectedFileName }}</span>
+      }
+
+      @if (imagePreview) {
+        <div class="garment-form__image-preview">
+          <img
+            [src]="isEditMode && !selectedFile ? (imagePreview | imageUrl) : imagePreview"
+            alt="Vista previa de la imagen"
+            class="garment-form__image-container"
+          />
+        </div>
+      }
+    </div>
+
+    <app-color-picker
+      title="Color principal"
+      [value]="extractedColor"
+      (colorChange)="onMainColorChange($event)"
+    >
+    </app-color-picker>
+
+    <div class="garment-form__checkboxes">
+      <label class="garment-form__checkbox-container">
+        <input class="garment-form__checkbox-input" type="checkbox" formControlName="pattern" />
+        <span>Tiene patrón</span>
+      </label>
+
+      <label class="garment-form__checkbox-container">
+        <input class="garment-form__checkbox-input" type="checkbox" formControlName="isSecondHand" />
+        <span>Segunda mano</span>
+      </label>
+    </div>
+
+    <app-button title="Añadir" [disabled]="form.invalid" (action)="submit()"></app-button>
+
+    <app-modal-selector
+      [sections]="garmentModalSections"
+      [display]="garmentDisplay"
+      [open]="showTypeModal"
+      (selectOption)="pickType($event)"
+      (close)="closeTypeModal()"
+    >
+    </app-modal-selector>
+
+    <app-confirmation-modal
+      title="¡Prenda añadida con éxito!"
+      message="¿Qué te gustaría hacer ahora?"
+      [options]="successModalOptions"
+      [open]="showSuccessModal"
+      (optionSelected)="handleSuccessOption($event)"
+      (close)="handleSuccessOption('finish')"
+    >
+    </app-confirmation-modal>
+  </div>
+</div>
+}

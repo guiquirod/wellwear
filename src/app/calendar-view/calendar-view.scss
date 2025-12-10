@@ -1,0 +1,39 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #CALENDAR-VIEW
+\*------------------------------------*/
+
+.calendar-view {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  &__wrapper {
+    padding: 2rem 3rem 6rem 2rem;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  &__outfits {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  &__empty-text {
+    font-size: 18px;
+    font-weight: 400;
+    color: $color-primary-grey;
+    text-align: center;
+    padding: 2rem;
+  }
+}

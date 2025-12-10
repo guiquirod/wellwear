@@ -1,0 +1,140 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #OUTFIT-FORM-MODAL-WRAPPER
+\*------------------------------------*/
+
+.outfit-form-modal-wrapper {
+  inset: 0;
+  position: fixed;
+  background: $color-secondary-grey;
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+
+
+
+
+/*------------------------------------*\
+  #OUTFIT-FORM
+\*------------------------------------*/
+
+.outfit-form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+  background: linear-gradient($color-gradient);
+  max-width: 90vw;
+  margin: 0.5rem;
+  box-sizing: border-box;
+
+  @media (min-width: $maxSMobileWidth) {
+    padding: 2rem 4rem;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Sans';
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__garments {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.5rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  &__section-title {
+    font-family: 'IBM Plex Sans';
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    text-align: left;
+  }
+
+  &__garment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0.5rem;
+
+    @media (min-width: $maxSMobileWidth) {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+
+  &__garment-option-container {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &__garment-option {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+    background: $color-secondary-grey;
+    padding: 0;
+    opacity: 0.5;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &__garment-option__detail-text {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 1rem;
+  }
+
+  &__garment-option__label {
+    text-align: center;
+    font-size: 12px;
+    color: $color-secondary-text;
+    background:  $color-success;
+    padding: 0.25rem;
+    margin: 0.25rem 0;
+  }
+
+  &__garment-option:hover {
+      opacity: 0.75;
+      transform: scale(1.05);
+  }
+
+  &__garment-option--selected{
+    opacity: 1;
+    border: 3px solid $color-primary-text;
+  }
+
+  &__garment-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__empty-text {
+    font-family: 'IBM Plex Sans';
+    text-align: center;
+    color: $color-primary-grey;
+    margin: 1rem 0;
+  }
+
+  &__actions {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+}

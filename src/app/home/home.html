@@ -1,0 +1,55 @@
+<div class="home">
+  <app-generic-toast></app-generic-toast>
+  <section class="home__wrapper">
+    <app-context-header></app-context-header>
+    <app-section-title [title]="'Conjuntos del día'"></app-section-title>
+    <div class="home__outfits">
+      @for (outfit of todayOutfits$ | async; track outfit.id) {
+      <app-product-container [title]="'Conjunto ' + ($index + 1)" [garments]="outfit.garments">
+      </app-product-container>
+      } @empty { @if (hasLessThanTwoGarments$ | async) {
+      <div class="home__empty-container">
+        <p class="home__empty-text">Aquí mostraremos tus futuros conjuntos</p>
+        <p class="home__empty-text--bolder">¡Añade 2 prendas y luego crea uno!</p>
+        <app-button [title]="'Añadir Prenda'" (action)="addGarment()"> </app-button>
+      </div>
+      } @else if (hasNoOutfits$ | async) {
+      <div class="home__empty-container">
+        <p class="home__empty-text--bolder">No tienes ningún conjunto ¡Crea uno!</p>
+        <app-button [title]="'Crear conjunto'" (action)="openOutfitCreationModal()"> </app-button>
+      </div>
+      } } @if (!(hasNoOutfits$ | async) && !(hasLessThanTwoGarments$ | async)) {
+      <app-button [title]="'Añadir Conjunto para Hoy'" (action)="openAddOutfitModal()">
+      </app-button>
+      }
+    </div>
+    <app-section-title [title]="'Logros Diarios'"></app-section-title>
+    <div class="home__achievements">
+      @for (achievement of dailyAchievements$ | async; track achievement.id) {
+      <app-achievement-row
+        [infoText]="achievement.title"
+        [isCompleted]="achievement.completed"
+        (checkboxChange)="onAchievementComplete(achievement.id)"
+      >
+      </app-achievement-row>
+      } @empty {
+      <p class="home__empty-text">No hay logros diarios disponibles</p>
+      }
+    </div>
+  </section>
+  <app-modal-selector
+    [sections]="outfitModalSections"
+    [display]="outfitDisplay"
+    [open]="showOutfitModal"
+    [showAddButton]="true"
+    [adButtonText]="'Añadir conjunto'"
+    (selectOption)="selectOutfitForToday($event)"
+    (addButtonClick)="openOutfitCreationModal()"
+    (close)="closeOutfitModal()"
+  >
+  </app-modal-selector>
+
+  <app-garment-form [open]="showGarmentForm" (close)="closeGarmentForm()"> </app-garment-form>
+
+  <app-outfit-form [open]="showOutfitForm" (close)="closeOutfitForm()"> </app-outfit-form>
+</div>

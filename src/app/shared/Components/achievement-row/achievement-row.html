@@ -1,0 +1,7 @@
+<div class="achievement-row">
+  <div class="achievement-row__info"> {{infoText}}</div>
+ <label class="achievement-row__checkbox-container" [ngClass]="{'achievement-row__checkbox-container--completed': isCompleted}">
+      <span>{{ isCompleted ? '¡Completado!' : 'Completar tarea' }}</span>
+      <input class="achievement-row__checkbox-input" type="checkbox" [checked]="isCompleted" [disabled]="isCompleted" (change)="onCheckboxChange($event)" />
+  </label>
+</div>

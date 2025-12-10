@@ -1,0 +1,107 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #GARMENT FORM MODAL WRAPPER
+\*------------------------------------*/
+
+.garment-form-modal-wrapper {
+  inset: 0;
+  position: fixed;
+  background: $color-secondary-grey;
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  z-index: 3;
+}
+
+
+
+
+
+
+/*------------------------------------*\
+  #GARMENT FORM MODAL
+\*------------------------------------*/
+
+.garment-form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 2rem 8rem;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+  background: linear-gradient($color-gradient);
+
+  &__file-container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+  }
+
+  &__label {
+    margin-bottom: 0.5rem;
+    font-family: 'IBM Plex Sans';
+    font-weight: 500;
+  }
+
+  &__file-input {
+    padding: 0.5rem;
+    border: 1px solid $color-secondary-text;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans';
+    cursor: pointer;
+  }
+
+  &__file-input:hover {
+    border-color: $color-primary-text;
+  }
+
+  &__file-name {
+    margin-top: 0.5rem;
+    font-family: 'IBM Plex Sans';
+    font-size: 14px;
+    color: $color-primary-grey;
+    font-style: italic;
+  }
+
+  &__image-preview {
+    margin-top: 1rem;
+    aspect-ratio: 1 / 1;
+    max-width: 380px;
+    border: 1px solid $color-primary-grey;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-secondary;
+  }
+
+  &__image-container {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__checkboxes {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.75rem;
+  }
+
+  &__checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'IBM Plex Sans';
+    cursor: pointer;
+  }
+
+  &__checkbox-input {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}

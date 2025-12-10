@@ -1,0 +1,95 @@
+<header class="header-nav">
+  <button class="header-nav__mobile-toggle" (click)="toggleMobileMenu()">
+    Menu
+    <img
+      src="assets/icons/dropdown.png"
+      alt="Menu"
+      class="header-nav__mobile-toggle-icon"
+      [ngClass]="{ 'header-nav__mobile-toggle-icon--open': mobileMenuOpen }"
+    />
+  </button>
+
+  <nav
+    class="header-nav__mobile-menu"
+    [ngClass]="{ 'header-nav__mobile-menu--open': mobileMenuOpen }"
+  >
+    <ul
+      class="header-nav__mobile-option"
+      [ngClass]="{ 'header-nav__mobile-option--active': isActive('/home') }"
+      (click)="navigateAndClose('/home')"
+    >
+      Home
+    </ul>
+    <ul
+      class="header-nav__mobile-option"
+      [ngClass]="{ 'header-nav__mobile-option--active': isActive('/calendar') }"
+      (click)="navigateAndClose('/calendar')"
+    >
+      Calendario
+    </ul>
+    <ul
+      class="header-nav__mobile-option"
+      [ngClass]="{ 'header-nav__mobile-option--active': isActive('/wardrobe') }"
+      (click)="navigateAndClose('/wardrobe')"
+    >
+      Armario
+    </ul>
+    <ul
+      class="header-nav__mobile-option"
+      [ngClass]="{ 'header-nav__mobile-option--active': isActive('/achievements') }"
+      (click)="navigateAndClose('/achievements')"
+    >
+      Retos
+    </ul>
+    <ul
+      class="header-nav__mobile-option header-nav__mobile-option--logout"
+      (click)="openLogoutModal(); closeMobileMenu()"
+    >
+      Logout
+    </ul>
+  </nav>
+
+  <nav class="header-nav__container">
+    <ul
+      class="header-nav__option"
+      [ngClass]="{ 'header-nav__option--active': isActive('/home') }"
+      (click)="navigate('/home')"
+    >
+      Home
+    </ul>
+    <ul
+      class="header-nav__option"
+      [ngClass]="{ 'header-nav__option--active': isActive('/calendar') }"
+      (click)="navigate('/calendar')"
+    >
+      Calendario
+    </ul>
+    <ul
+      class="header-nav__option"
+      [ngClass]="{ 'header-nav__option--active': isActive('/wardrobe') }"
+      (click)="navigate('/wardrobe')"
+    >
+      Armario
+    </ul>
+    <ul
+      class="header-nav__option"
+      [ngClass]="{ 'header-nav__option--active': isActive('/achievements') }"
+      (click)="navigate('/achievements')"
+    >
+      Retos
+    </ul>
+    <ul class="header-nav__option header-nav__option--logout" (click)="openLogoutModal()">
+      <img src="assets/icons/house-icon.png" alt="Logout" class="header-nav__logout-icon" />
+    </ul>
+  </nav>
+</header>
+
+<app-confirmation-modal
+  [open]="showLogoutModal"
+  [title]="'Cerrar Sesión'"
+  [message]="'¿Estás seguro de que deseas cerrar sesión?'"
+  [options]="logoutOptions"
+  (optionSelected)="handleLogoutOption($event)"
+  (close)="closeLogoutModal()"
+>
+</app-confirmation-modal>

@@ -1,0 +1,6 @@
+<button class="main-button" [ngClass]="{'main-button--no-icon': !rightIcon, 'main-button--disabled': disabled}" (click)="handleClick()">
+  <span class="main-button__title">{{ title }}</span>
+  @if (rightIcon) {
+    <img [src]="rightIcon" class="main-button__icon" alt="">
+  }
+</button>

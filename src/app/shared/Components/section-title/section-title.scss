@@ -1,0 +1,17 @@
+/*------------------------------------*\
+  #SECTION-TITLE
+\*------------------------------------*/
+
+.section-title {
+  font-family: "Inria Sans", sans-serif;
+  font-weight: 700;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 20px 0;
+  gap: 1rem;
+
+   &__text {
+    font-size: 24px;
+   }
+}

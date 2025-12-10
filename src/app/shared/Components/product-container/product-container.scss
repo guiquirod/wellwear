@@ -1,0 +1,63 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #PRODUCT-CONTAINER
+\*------------------------------------*/
+
+.product-container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 2rem;
+    background: linear-gradient($color-gradient);
+    position: relative;
+
+     &__title {
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    &__row {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        padding-top: 1rem;
+    }
+
+    &--second-style {
+        background: $color-secondary;
+        transition: box-shadow 0.3s ease-in-out;
+        box-shadow: 0 0 0 $color-disabled;
+    }
+
+     &--second-style:hover {
+        box-shadow: 0 8px 8px $color-disabled;
+    }
+
+    &--clickable {
+        cursor: pointer;
+    }
+
+    &__corner {
+    position: absolute;
+    z-index: 1;
+    border-left: 2px $color-primary-text solid;
+    border-top: 2px $color-primary-text solid;
+    top: 0;
+    left: 0;
+    width: 17px;
+    height: 14px;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+    &__corner--alt {
+    position: absolute;
+    z-index: 1;
+    border-right: 2px $color-primary-text solid;
+    border-bottom: 2px $color-primary-text solid;
+    bottom: 0;
+    right: 0;
+    width: 17px;
+    height: 14px;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+}

@@ -1,0 +1,75 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #BUTTON
+\*------------------------------------*/
+
+.main-button {
+  appearance: none;
+  display: flex;
+  width: 100%;
+  max-width: 380px;
+  height: 62px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.25rem 1.5rem;
+  border: 1px solid $color-primary-text;
+  background: $color-secondary;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: $color-primary;
+    transition: height 0.4s ease;
+    z-index: 0;
+  }
+
+  &__title {
+    color: $color-primary-text;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+    transition: color 0.4s ease;
+  }
+
+  &__icon {
+    aspect-ratio: 1 / 1;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    z-index: 1;
+    transition: filter 0.4s ease;
+  }
+
+   &--no-icon {
+    justify-content: center;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:not(.main-button--disabled):hover::before {
+    height: 100%;
+  }
+
+  &:not(.main-button--disabled):hover &__title {
+    color: $color-secondary;
+  }
+
+  &:not(.main-button--disabled):hover &__icon {
+    filter: brightness(0) invert(1);
+  }
+}

@@ -1,0 +1,50 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #HOME
+\*------------------------------------*/
+
+.home {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  &__wrapper {
+    padding: 2rem 3rem 6rem 2rem;
+  }
+
+  &__achievements {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  &__outfits {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: left;
+    gap: 1rem;
+    padding-bottom: 4rem;
+  }
+
+  &__empty-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  &__empty-text {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  &__empty-text--bolder {
+    font-size: 38px;
+    font-weight: 900;
+    margin: 0;
+    padding: 1rem 0 4rem 0;
+  }
+}

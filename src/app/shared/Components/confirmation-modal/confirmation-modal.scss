@@ -1,0 +1,60 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #CONFIRMATION-MODAL-WRAPPER
+\*------------------------------------*/
+
+.confirmation-modal-wrapper {
+  inset: 0;
+  position: fixed;
+  background: $color-secondary-grey;
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+
+
+
+
+/*------------------------------------*\
+  #CONFIRMATION-MODAL
+\*------------------------------------*/
+
+.confirmation-modal {
+  min-width: 400px;
+  max-width: 500px;
+  background: linear-gradient($color-gradient);
+  padding: 2rem;
+  animation: slideIn 0.3s ease-out;
+
+  &__content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.5rem;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Sans';
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__message {
+    font-family: 'IBM Plex Sans';
+    margin: 0;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+  }
+}

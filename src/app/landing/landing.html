@@ -1,0 +1,17 @@
+<div class="landing">
+  <div class="landing__content">
+    <span class="landing__sub-text">Tu armario virtual sostenible</span>
+    <h1 class="landing__text">WELLWEAR</h1>
+
+    <div class="landing__buttons">
+      <app-button title="Iniciar Sesión" (action)="openLoginModal()"></app-button>
+      <app-button title="Registrarse" (action)="openRegisterModal()"></app-button>
+    </div>
+  </div>
+
+  <app-auth-modal
+    [open]="openModal"
+    [isLoginMode]="loginMode"
+    (closeModal)="closeAuthModal()"
+  ></app-auth-modal>
+</div>

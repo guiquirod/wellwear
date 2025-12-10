@@ -1,0 +1,36 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #GENERIC-TOAST
+\*------------------------------------*/
+
+.generic-toast {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 2rem;
+  background-color: $color-error;
+  color: $color-secondary;
+  box-shadow: 0 4px 12px $color-disabled;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+  view-transition-name: toast;
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__message {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &--success {
+    background-color: $color-success;
+  }
+}

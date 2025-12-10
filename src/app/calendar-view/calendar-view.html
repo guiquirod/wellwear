@@ -1,0 +1,19 @@
+<div class="calendar-view">
+  <app-generic-toast></app-generic-toast>
+  <section class="calendar-view__wrapper">
+
+    <app-section-title [title]="'Calendario'"></app-section-title>
+    <app-calendar (dateChange)="onDayChange($event)"></app-calendar>
+
+    <div class="calendar-view__outfits">
+      @for (item of selectedDateOutfits$ | async; track item.id) {
+        <app-product-container
+          [title]="'Conjunto ' + ($index + 1)"
+          [garments]="item.garments">
+        </app-product-container>
+      } @empty {
+        <p class="calendar-view__empty-text">No hay conjuntos en esta fecha</p>
+      }
+    </div>
+  </section>
+</div>

@@ -1,0 +1,20 @@
+<div class="product-container"
+     [ngClass]="{'product-container--second-style': secondStyle, 'product-container--clickable': clickable}"
+     (click)="handleClick()">
+    <span class="product-container__title">{{ title }}</span>
+    <div class="product-container__row">
+        @for (garment of garments; track garment.id) {
+            <app-product-image
+                [imageSrc]="garment.picture"
+                [alt]="garment.type"
+                [isSecondHand]="garment.isSecondHand">
+            </app-product-image>
+        }
+    </div>
+    @if (secondStyle) {
+        <span class="product-container__corner">
+        </span>
+        <span class="product-container__corner--alt">
+        </span>
+    }
+</div>

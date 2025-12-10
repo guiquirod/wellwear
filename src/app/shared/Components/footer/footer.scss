@@ -1,0 +1,58 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #FOOTER
+\*------------------------------------*/
+
+.footer {
+  background: $color-primary;
+  text-align: center;
+
+  @media (min-width: $maxLMobileWidth) {
+    text-align: left;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 3rem 4rem 4rem;
+    gap: 6rem;
+
+    @media (min-width: $maxLMobileWidth) {
+      flex-flow: row nowrap;
+      justify-content: space-between;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &__title {
+    color: $color-secondary-text;
+    font-weight: bold;
+    font-family: Museo Moderno;
+    font-size: 24px;
+  }
+
+  &__text {
+    color: $color-secondary-text;
+    font-weight: 400;
+    font-family: Museo Moderno;
+    font-size: 18px;
+  }
+
+  &__text--year {
+    color: $color-secondary-text;
+    font-weight: 400;
+    font-family: Museo Moderno;
+    font-size: 18px;
+
+    @media (min-width: $maxLMobileWidth) {
+      text-align: right;
+    }
+  }
+}

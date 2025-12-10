@@ -1,0 +1,83 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #DROPDOWN
+\*------------------------------------*/
+
+.dropdown {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &__button {
+    appearance: none;
+    display: flex;
+    width: 100%;
+    height: 62px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.25rem 1.5rem;
+    border: 1px solid $color-primary-text;
+    background: $color-secondary;
+    cursor: pointer;
+  }
+
+  &__title {
+    color: $color-primary-text;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  &__icon {
+    aspect-ratio: 1 / 1;
+    width: 25px;
+    height: 25px;
+    transition: transform 0.3s ease;
+  }
+
+  &__icon--active {
+    transform: rotate(180deg);
+  }
+
+  &__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: $color-secondary;
+    border: 1px solid $color-primary-text;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+    animation: accordionDown 0.3s ease-out;
+    transform-origin: top;
+    z-index: 5;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    gap: 0.5rem;
+  }
+
+  &__option:hover {
+    background: $color-secondary;
+  }
+
+  &__checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  &__label {
+    color: $color-primary-text;
+    cursor: pointer;
+  }
+}

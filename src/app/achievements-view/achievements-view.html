@@ -1,0 +1,57 @@
+<div class="achievements-view">
+  <app-generic-toast></app-generic-toast>
+  <section class="achievements-view__wrapper">
+    <div class="achievements-view__level">
+      <span class="achievements-view__corner"></span>
+      <span class="achievements-view__corner--alt"></span>
+      <h2 class="achievements-view__level-text">Nivel. {{ (userLevel$ | async)?.level ?? 1 }}</h2>
+      <p class="achievements-view__points">{{ (userLevel$ | async)?.currentPoints ?? 0 }}/100</p>
+      <p class="achievements-view__points">progreso</p>
+    </div>
+    <div class="achievements-view__message">
+      <h2 class="achievements-view__message-name">¡Buenas {{ userName$ | async }}!</h2>
+      <p class="achievements-view__message-text">Completa los retos para aumentar tu nivel de consumo sostenible. Los retos cambiarán dependiendo de su periodicidad.</p>
+    </div>
+    <app-section-title [title]="'Retos'"></app-section-title>
+    <h3 class="achievements-view__section-title">Retos Mensuales</h3>
+    <div class="achievements-view__section">
+      <div class="achievements-view__list">
+        @for (achievement of monthlyAchievemenmts$ | async; track achievement.id) {
+        <app-achievement-row
+          [infoText]="achievement.title"
+          [isCompleted]="achievement.completed"
+          (checkboxChange)="onAchievementComplete(achievement.id)"
+        >
+        </app-achievement-row>
+        }
+      </div>
+    </div>
+    <h3 class="achievements-view__section-title">Retos Semanales</h3>
+    <div class="achievements-view__section">
+      <div class="achievements-view__list">
+        @for (achievement of weeklyAchievements$ | async; track achievement.id) {
+        <app-achievement-row
+          [infoText]="achievement.title"
+          [isCompleted]="achievement.completed"
+          (checkboxChange)="onAchievementComplete(achievement.id)"
+        >
+        </app-achievement-row>
+        }
+      </div>
+    </div>
+
+    <h3 class="achievements-view__section-title">Retos Diarios</h3>
+    <div class="achievements-view__section">
+      <div class="achievements-view__list">
+        @for (achievement of dailyAchievements$ | async; track achievement.id) {
+        <app-achievement-row
+          [infoText]="achievement.title"
+          [isCompleted]="achievement.completed"
+          (checkboxChange)="onAchievementComplete(achievement.id)"
+        >
+        </app-achievement-row>
+        }
+      </div>
+    </div>
+  </section>
+</div>

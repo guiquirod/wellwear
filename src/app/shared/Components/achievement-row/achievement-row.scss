@@ -1,0 +1,59 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #ACHIEVEMENT-ROW
+\*------------------------------------*/
+
+.achievement-row {
+  transition: background-color 0.3s ease;
+  width: 100%;
+  min-width: 325px;
+  max-width: 6300px;
+  margin: 0 auto;
+  font-family: 'IBM Plex Sans';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+
+  &__info {
+    background: $color-primary;
+    color: $color-secondary-text;
+    padding: 1.5rem;
+  }
+
+  &__checkbox-container {
+    appearance: none;
+    display: flex;
+    height: 62px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.25rem 1.5rem;
+    border: 1px solid $color-primary;
+    background: $color-secondary;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  &__checkbox-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient($color-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  &__checkbox-container--completed::before {
+    opacity: 1;
+  }
+
+  &__checkbox-input {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+}

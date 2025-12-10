@@ -1,0 +1,75 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #MODAL-WRAPPER
+\*------------------------------------*/
+
+.modal-wrapper {
+  inset: 0;
+  position: fixed;
+  background: $color-secondary-grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  z-index: 7;
+}
+
+/*------------------------------------*\
+  #MODAL
+\*------------------------------------*/
+
+.modal {
+  max-height: 90vh;
+  background: linear-gradient($color-gradient);
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+  padding: 2rem;
+  margin: 2rem;
+  box-sizing: border-box;
+
+  &__grid {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+
+  &__grid-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    @media (min-width: $maxSMobileWidth) {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+
+  &__grid-section-title {
+    padding-inline: 12px;
+  }
+
+  &__option {
+    display: flex;
+    flex-flow: column nowrap;
+    appearance: none;
+    border: 0;
+    width: 100%;
+    height: auto;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  &__option-text {
+    font-family: 'IBM Plex Sans';
+    text-align: center;
+    font-size: 18px;
+    padding-top: 12px;
+  }
+
+  &__option-image {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    background: $color-secondary;
+  }
+}

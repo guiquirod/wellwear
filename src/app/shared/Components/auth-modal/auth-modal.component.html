@@ -1,0 +1,115 @@
+@if (open) {
+<div class="auth-modal-wrapper" (click)="closeModal.emit()">
+  <div class="auth-modal" (click)="$event.stopPropagation()">
+    <div class="auth-modal__grid">
+      <h2 class="auth-modal__grid-title">{{ isLoginMode ? 'Iniciar sesión' : 'Crea tu cuenta' }}</h2>
+      @if (isLoginMode) {
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-modal__form">
+        <div class="auth-modal__form-group">
+          <label class="auth-modal__form-group-title" for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="auth-modal__form-group-input"
+            placeholder="Introduce tu email"
+          />
+          @if (loginEmail.value === '' && loginEmail.touched) {
+          <small class="auth-modal__error-feedback">Introduce un email</small>
+          } @else if (loginEmail.invalid && loginEmail.touched) {
+          <small class="auth-modal__error-feedback">Introduce un email válido</small>
+          }
+        </div>
+
+        <div class="auth-modal__form-group">
+          <label class="auth-modal__form-group-title" for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="auth-modal__form-group-input"
+            placeholder="Introduce tu contraseña"
+          />
+          @if (loginPassword.value === '' && loginPassword.touched) {
+          <small class="auth-modal__error-feedback">Introduce una contraseña</small>
+          } @else if (loginPassword.invalid && loginPassword.touched) {
+          <small class="auth-modal__error-feedback"
+            >La contraseña debe tener entre 6 y 16 caracteres</small
+          >
+          }
+        </div>
+
+        <button type="submit" class="auth-modal__submit-btn" [disabled]="loginForm.invalid">
+          Entrar
+        </button>
+      </form>
+      } @else {
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="auth-modal__form">
+        <div class="auth-modal__form-group">
+          <label class="auth-modal__form-group-title" for="name">Nombre</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="auth-modal__form-group-input"
+            placeholder="Introduce tu nombre"
+          />
+          @if (name.invalid && name.touched) {
+          <small class="auth-modal__error-feedback"
+            >Nombre requerido. Debe tener entre 3 y 30 caracteres</small
+          >
+          }
+        </div>
+
+        <div class="auth-modal__form-group">
+          <label class="auth-modal__form-group-title" for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="auth-modal__form-group-input"
+            placeholder="Introduce tu email"
+          />
+          @if (registerEmail.value === '' && registerEmail.touched) {
+          <small class="auth-modal__error-feedback">Introduce un email</small>
+          } @else if (registerEmail.invalid && registerEmail.touched) {
+          <small class="auth-modal__error-feedback">Introduce un email válido</small>
+          }
+        </div>
+
+        <div class="auth-modal__form-group">
+          <label class="auth-modal__form-group-title" for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="auth-modal__form-group-input"
+            placeholder="Introduce una contraseña"
+          />
+          @if (registerPassword.value === '' && registerPassword.touched) {
+          <small class="auth-modal__error-feedback">Introduce una contraseña</small>
+          } @else if (registerPassword.invalid && registerPassword.touched) {
+          <small class="auth-modal__error-feedback"
+            >La contraseña debe tener entre 6 y 16 caracteres</small
+          >
+          }
+        </div>
+
+        <button type="submit" class="auth-modal__submit-btn" [disabled]="registerForm.invalid">
+          Registrate
+        </button>
+      </form>
+      }
+
+      <div class="auth-modal__footer">
+        <p>
+          {{ isLoginMode ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? ' }}
+          <a (click)="toggleMode()" class="auth-modal__footer-link">
+            {{ isLoginMode ? ' Registrate' : ' Haz login' }}
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+}

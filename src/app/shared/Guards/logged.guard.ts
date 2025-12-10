@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { Router, CanActivate } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppState } from '../../app.reducers';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoggedGuard implements CanActivate {
+
+  constructor(
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
+
+  canActivate(): Observable<boolean> {
+    return this.isLogged();
+  }
+
+  private isLogged(): Observable<boolean> {
+    return this.store.select(state => state.auth.isAuthenticated).pipe(
+      map(isAuthenticated => {
+        if (isAuthenticated) {
+          return true;
+        } else {
+          this.router.navigate(['']);
+          return false;
+        }
+      })
+    );
+  }
+}
