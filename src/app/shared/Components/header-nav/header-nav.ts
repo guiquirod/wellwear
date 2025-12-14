@@ -18,8 +18,14 @@ export class HeaderNav {
   mobileMenuOpen = false;
 
   logoutOptions: ConfirmationOption[] = [
-    { label: 'Confirmar', value: 'confirm', variant: 'primary' },
-    { label: 'Cancelar', value: 'cancel', variant: 'secondary' }
+    {
+      text: 'Confirmar',
+      action: () => this.handleConfirm()
+    },
+    {
+      text: 'Cancelar',
+      action: () => this.handleCancel()
+    }
   ];
 
   constructor(
@@ -53,10 +59,12 @@ export class HeaderNav {
     this.showLogoutModal = false;
   }
 
-  handleLogoutOption(option: string) {
-    if (option === 'confirm') {
-      this.store.dispatch(AuthActions.logout());
-    }
+  handleConfirm() {
+    this.store.dispatch(AuthActions.logout());
+    this.closeLogoutModal();
+  }
+
+  handleCancel() {
     this.closeLogoutModal();
   }
 

@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Button } from '../button/button';
 
 export interface ConfirmationOption {
-  label: string;
-  value: string;
-  variant?: 'primary' | 'secondary';
+  text: string;
+  action: () => void;
 }
 
 @Component({
@@ -21,9 +20,4 @@ export class ConfirmationModal {
   @Input() open = false;
 
   @Output() close = new EventEmitter<void>();
-  @Output() optionSelected = new EventEmitter<string>();
-
-  selectOption(value: string) {
-    this.optionSelected.emit(value);
-  }
 }

@@ -97,8 +97,7 @@
       message="¿Qué te gustaría hacer ahora?"
       [options]="successModalOptions"
       [open]="showSuccessModal"
-      (optionSelected)="handleSuccessOption($event)"
-      (close)="handleSuccessOption('finish')"
+      (close)="handleFinish()"
     >
     </app-confirmation-modal>
   </div>

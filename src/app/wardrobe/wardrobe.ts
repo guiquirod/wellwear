@@ -42,9 +42,26 @@ export class Wardrobe implements OnInit {
   selectedOutfit: OutfitWithGarments | null = null;
   selectedGarment: GarmentDTO | null = null;
 
-  confirmationOptions: ConfirmationOption[] = [
-    { label: 'Actualizar', value: 'update', variant: 'primary' },
-    { label: 'Eliminar', value: 'delete', variant: 'secondary' }
+  outfitConfirmationOptions: ConfirmationOption[] = [
+    {
+      text: 'Actualizar',
+      action: () => this.handleOutfitUpdate()
+    },
+    {
+      text: 'Eliminar',
+      action: () => this.handleOutfitDelete()
+    }
+  ];
+
+  garmentConfirmationOptions: ConfirmationOption[] = [
+    {
+      text: 'Actualizar',
+      action: () => this.handleGarmentUpdate()
+    },
+    {
+      text: 'Eliminar',
+      action: () => this.handleGarmentDelete()
+    }
   ];
 
   constructor(
@@ -86,23 +103,25 @@ export class Wardrobe implements OnInit {
     this.showConfirmationModal = true;
   }
 
-  closeConfirmationModal() {
+  closeOutfitConfirmationModal() {
     this.showConfirmationModal = false;
     this.selectedOutfit = null;
   }
 
-  handleConfirmationOption(option: string) {
+  handleOutfitUpdate() {
     if (!this.selectedOutfit) {
       return;
     }
+    this.showConfirmationModal = false;
+    this.createOrUpdateOutfit();
+  }
 
-    if (option === 'delete') {
-      this.deleteOutfit(this.selectedOutfit.id);
-      this.closeConfirmationModal();
-    } else if (option === 'update') {
-      this.showConfirmationModal = false;
-      this.createOrUpdateOutfit();
+  handleOutfitDelete() {
+    if (!this.selectedOutfit) {
+      return;
     }
+    this.deleteOutfit(this.selectedOutfit.id);
+    this.closeOutfitConfirmationModal();
   }
 
   deleteOutfit(outfitId: string) {
@@ -129,18 +148,20 @@ export class Wardrobe implements OnInit {
     this.selectedGarment = null;
   }
 
-  handleGarmentConfirmationOption(option: string) {
+  handleGarmentUpdate() {
     if (!this.selectedGarment) {
       return;
     }
+    this.showGarmentConfirmationModal = false;
+    this.showGarmentForm = true;
+  }
 
-    if (option === 'delete') {
-      this.deleteGarment(this.selectedGarment.id);
-      this.closeGarmentConfirmationModal();
-    } else if (option === 'update') {
-      this.showGarmentConfirmationModal = false;
-      this.showGarmentForm = true;
+  handleGarmentDelete() {
+    if (!this.selectedGarment) {
+      return;
     }
+    this.deleteGarment(this.selectedGarment.id);
+    this.closeGarmentConfirmationModal();
   }
 
   deleteGarment(garmentId: string) {

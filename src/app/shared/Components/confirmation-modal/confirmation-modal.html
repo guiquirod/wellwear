@@ -9,10 +9,10 @@
         <p class="confirmation-modal__message">{{ message }}</p>
       }
       <div class="confirmation-modal__actions">
-        @for (option of options; track option.value) {
+        @for (option of options; track option.text) {
           <app-button
-            [title]="option.label"
-            (action)="selectOption(option.value)"
+            [title]="option.text"
+            (action)="option.action()"
           >
           </app-button>
         }

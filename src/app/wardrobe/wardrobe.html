@@ -43,17 +43,15 @@
     [open]="showConfirmationModal"
     [title]="'Gestionar Conjunto'"
     [message]="'¿Qué deseas hacer con este conjunto?'"
-    [options]="confirmationOptions"
-    (optionSelected)="handleConfirmationOption($event)"
-    (close)="closeConfirmationModal()">
+    [options]="outfitConfirmationOptions"
+    (close)="closeOutfitConfirmationModal()">
   </app-confirmation-modal>
 
   <app-confirmation-modal
     [open]="showGarmentConfirmationModal"
     [title]="'Gestionar Prenda'"
     [message]="'¿Qué deseas hacer con esta prenda?'"
-    [options]="confirmationOptions"
-    (optionSelected)="handleGarmentConfirmationOption($event)"
+    [options]="garmentConfirmationOptions"
     (close)="closeGarmentConfirmationModal()">
   </app-confirmation-modal>
 

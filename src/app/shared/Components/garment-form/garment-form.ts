@@ -86,8 +86,14 @@ export class GarmentForm implements OnInit, OnChanges {
   showSuccessModal = false;
 
   successModalOptions: ConfirmationOption[] = [
-    { label: 'Añadir otra prenda', value: 'add-another' },
-    { label: 'Finalizar', value: 'finish' }
+    {
+      text: 'Añadir otra prenda',
+      action: () => this.handleAddAnother()
+    },
+    {
+      text: 'Finalizar',
+      action: () => this.handleFinish()
+    }
   ];
 
   ngOnInit() {
@@ -334,13 +340,14 @@ export class GarmentForm implements OnInit, OnChanges {
     });
   }
 
-  handleSuccessOption(option: string) {
+  handleAddAnother() {
     this.showSuccessModal = false;
-    if (option === 'add-another') {
-      this.resetForm();
-    } else if (option === 'finish') {
-      this.closeForm();
-    }
+    this.resetForm();
+  }
+
+  handleFinish() {
+    this.showSuccessModal = false;
+    this.closeForm();
   }
 
   closeForm() {
