@@ -2,7 +2,10 @@ import { ActionReducerMap } from '@ngrx/store';
 import { AuthState, authReducer } from './shared/Store/auth/auth.reducer';
 import { GarmentState, garmentReducer } from './shared/Store/garment/garment.reducer';
 import { OutfitState, outfitReducer } from './shared/Store/outfit/outfit.reducer';
-import { AchievementState, achievementReducer } from './shared/Store/achievement/achievement.reducer';
+import {
+  AchievementState,
+  achievementReducer,
+} from './shared/Store/achievement/achievement.reducer';
 
 export interface AppState {
   auth: AuthState;

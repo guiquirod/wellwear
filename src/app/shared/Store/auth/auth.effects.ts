@@ -2,15 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, finalize, map, tap } from 'rxjs/operators';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { SharedService } from '../../Services/shared.service';
 import { AuthActions, AuthApiActions } from './auth.actions';
 import { AuthService } from '../../Services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  private responseOK: boolean = false;
-
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -21,17 +19,8 @@ export class AuthEffects {
       ofType(AuthActions.login),
       exhaustMap(({ credentials }) =>
         this.authService.login(credentials).pipe(
-          map((user) => {
-            return AuthApiActions.loginSuccess({ user });
-          }),
-          catchError((error) => {
-            return of(AuthApiActions.loginFailure({ error: error.message }));
-          }),
-          finalize(() => {
-            if (this.responseOK) {
-              this.router.navigateByUrl('home');
-            }
-          })
+          map((response) => AuthApiActions.loginSuccess({ user: response.data! })),
+          catchError((error) => of(AuthApiActions.loginFailure({ error: error.error?.message })))
         )
       )
     )
@@ -42,7 +31,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.loginSuccess),
         tap(() => {
-          this.responseOK = true;
+          this.router.navigateByUrl('home');
         })
       ),
     { dispatch: false }
@@ -53,7 +42,6 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.loginFailure),
         tap(({ error }) => {
-          this.responseOK = false;
           this.sharedService.showToast(error);
         })
       ),
@@ -65,15 +53,8 @@ export class AuthEffects {
       ofType(AuthActions.register),
       exhaustMap(({ credentials }) =>
         this.authService.register(credentials).pipe(
-          map((user) => AuthApiActions.registerSuccess({ user })),
-          catchError((error) =>
-            of(AuthApiActions.registerFailure({ error: error.message }))
-          ),
-          finalize(() => {
-            if (this.responseOK) {
-              this.router.navigateByUrl('home');
-            }
-          })
+          map((response) => AuthApiActions.registerSuccess({ user: response.data! })),
+          catchError((error) => of(AuthApiActions.registerFailure({ error: error.error?.message })))
         )
       )
     )
@@ -84,7 +65,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.registerSuccess),
         tap(() => {
-          this.responseOK = true;
+          this.router.navigateByUrl('home');
         })
       ),
     { dispatch: false }
@@ -95,7 +76,6 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.registerFailure),
         tap(({ error }) => {
-          this.responseOK = false;
           this.sharedService.showToast(error);
         })
       ),
@@ -108,13 +88,68 @@ export class AuthEffects {
       exhaustMap(() =>
         this.authService.logout().pipe(
           map(() => AuthApiActions.logoutSuccess()),
-          tap(() => {
-            this.router.navigateByUrl('/');
-          }),
-          catchError(() => of(AuthApiActions.logoutSuccess()))
+          catchError((error) => of(AuthApiActions.logoutFailure({ error: error.error?.message })))
         )
       )
     )
+  );
+
+  logoutSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.logoutSuccess),
+        tap(() => {
+          this.router.navigateByUrl('/');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  logoutFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.logoutFailure),
+        tap(({ error }) => {
+          this.sharedService.showToast(error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.deleteUser),
+      exhaustMap(() =>
+        this.authService.deleteUser().pipe(
+          map(() => AuthApiActions.deleteUserSuccess()),
+          catchError((error) =>
+            of(AuthApiActions.deleteUserFailure({ error: error.error?.message }))
+          )
+        )
+      )
+    )
+  );
+
+  deleteUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.deleteUserSuccess),
+        tap(() => {
+          this.router.navigateByUrl('/');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteUserFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.deleteUserFailure),
+        tap(({ error }) => {
+          this.sharedService.showToast(error);
+        })
+      ),
+    { dispatch: false }
   );
 
   loadAuthFromStorage$ = createEffect(() =>
@@ -122,8 +157,8 @@ export class AuthEffects {
       ofType(AuthActions.loadAuthFromStorage),
       exhaustMap(() => {
         return this.authService.checkSessionState().pipe(
-          map((user) => {
-            return AuthApiActions.loadAuthFromStorageSuccess({ user });
+          map((response) => {
+            return AuthApiActions.loadAuthFromStorageSuccess({ user: response.data! });
           }),
           catchError(() => {
             return of(AuthApiActions.logoutSuccess());

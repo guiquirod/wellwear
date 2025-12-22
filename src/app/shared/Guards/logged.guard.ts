@@ -6,29 +6,27 @@ import { map } from 'rxjs/operators';
 import { AppState } from '../../app.reducers';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoggedGuard implements CanActivate {
-
-  constructor(
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   canActivate(): Observable<boolean> {
     return this.isLogged();
   }
 
   private isLogged(): Observable<boolean> {
-    return this.store.select(state => state.auth.isAuthenticated).pipe(
-      map(isAuthenticated => {
-        if (isAuthenticated) {
-          return true;
-        } else {
-          this.router.navigate(['']);
-          return false;
-        }
-      })
-    );
+    return this.store
+      .select((state) => state.auth.isAuthenticated)
+      .pipe(
+        map((isAuthenticated) => {
+          if (isAuthenticated) {
+            return true;
+          } else {
+            this.router.navigate(['']);
+            return false;
+          }
+        })
+      );
   }
 }

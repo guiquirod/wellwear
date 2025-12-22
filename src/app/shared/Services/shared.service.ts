@@ -13,7 +13,7 @@ export interface ResponseError {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SharedService {
   toast$ = new Subject<{ message: string; success: boolean }>();

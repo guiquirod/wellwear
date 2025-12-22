@@ -5,45 +5,45 @@
 \*------------------------------------*/
 
 .wardrobe {
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  &__wrapper {
+    padding: 2rem 3rem 6rem 2rem;
+    gap: 2rem;
+  }
+
+  &__outfits {
     display: flex;
     flex-flow: column nowrap;
-    max-width: 1180px;
-    margin: 0 auto;
+    gap: 2rem;
+    padding: 4rem 0;
+  }
 
-    &__wrapper {
-      padding: 2rem 3rem 6rem 2rem;
-      gap: 2rem
-    }
-        
-    &__outfits {
-      display: flex;
-      flex-flow: column nowrap;
-      gap: 2rem;
-      padding: 4rem 0;
-    }
+  &__garments {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+    padding: 4rem 0;
+  }
 
-    &__garments {
-      display: flex;
-      flex-flow: column nowrap;
-      gap: 2rem;
-      padding: 4rem 0;
-    }
+  &__garments-section-title {
+    font-size: 24px;
+  }
 
-    &__garments-section-title {
-      font-size: 24px;
-    }
+  &__garments-section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
 
-    &__garments-section {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-
-      @media (min-width: $maxLMobileWidth) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    @media (min-width: $maxLMobileWidth) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
 
-    &__empty{
-      text-align: center;
-    }
+  &__empty {
+    text-align: center;
+  }
 }

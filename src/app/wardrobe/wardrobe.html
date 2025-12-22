@@ -1,42 +1,44 @@
 <app-generic-toast></app-generic-toast>
 <div class="wardrobe">
   <section class="wardrobe__wrapper">
-      <app-section-title [title]="'Mis Conjuntos'"></app-section-title>
-      <app-button [title]="'Crear Nuevo Conjunto'" (action)="createOrUpdateOutfit()"> </app-button>
-      <div class="wardrobe__outfits">
-        @for (item of outfits$ | async; track item.id) {
-        <app-product-container
-          [secondStyle]="true"
-          [clickable]="true"
-          [title]="'Conjunto ' + ($index + 1)"
-          [garments]="item.garments"
-          (containerClick)="onOutfitClick(item)">
-        </app-product-container>
-        } @empty {
-        <p class="wardrobe__empty">No tienes conjuntos creados todavía</p>
-        }
-      </div>
+    <app-section-title [title]="'Mis Conjuntos'"></app-section-title>
+    <app-button [title]="'Crear Nuevo Conjunto'" (action)="createOrUpdateOutfit()"> </app-button>
+    <div class="wardrobe__outfits">
+      @for (item of outfits$ | async; track item.id) {
+      <app-product-container
+        [secondStyle]="true"
+        [clickable]="true"
+        [title]="'Conjunto ' + ($index + 1)"
+        [garments]="item.garments"
+        (containerClick)="onOutfitClick(item)"
+      >
+      </app-product-container>
+      } @empty {
+      <p class="wardrobe__empty">No tienes conjuntos creados todavía</p>
+      }
+    </div>
 
-      <app-section-title [title]="'Mis Prendas'"></app-section-title>
-      <app-button [title]="'Añadir Nueva Prenda'" (action)="createGarment()"></app-button>
-      <div class="wardrobe__garments">
-        @for (group of garmentsByType$ | async; track group.type) {
-          <h3 class="wardrobe__garments-section-title">{{ group.typeName }}</h3>
-          <div class="wardrobe__garments-section">
-            @for (garment of group.garments; track garment.id) {
-            <app-product-image
-              [imageSrc]="garment.picture"
-              [alt]="group.typeName"
-              [clickable]="true"
-              [isSecondHand]="garment.isSecondHand"
-              (imageClick)="onGarmentClick(garment)">
-            </app-product-image>
-            }
-          </div>
-        } @empty {
-        <p class="wardrobe__empty">Aún no tienes prendas en tu armario</p>
+    <app-section-title [title]="'Mis Prendas'"></app-section-title>
+    <app-button [title]="'Añadir Nueva Prenda'" (action)="createGarment()"></app-button>
+    <div class="wardrobe__garments">
+      @for (group of garmentsByType$ | async; track group.type) {
+      <h3 class="wardrobe__garments-section-title">{{ group.typeName }}</h3>
+      <div class="wardrobe__garments-section">
+        @for (garment of group.garments; track garment.id) {
+        <app-product-image
+          [imageSrc]="garment.picture"
+          [alt]="group.typeName"
+          [clickable]="true"
+          [isSecondHand]="garment.isSecondHand"
+          (imageClick)="onGarmentClick(garment)"
+        >
+        </app-product-image>
         }
       </div>
+      } @empty {
+      <p class="wardrobe__empty">Aún no tienes prendas en tu armario</p>
+      }
+    </div>
   </section>
 
   <app-confirmation-modal
@@ -44,7 +46,8 @@
     [title]="'Gestionar Conjunto'"
     [message]="'¿Qué deseas hacer con este conjunto?'"
     [options]="outfitConfirmationOptions"
-    (close)="closeOutfitConfirmationModal()">
+    (close)="closeOutfitConfirmationModal()"
+  >
   </app-confirmation-modal>
 
   <app-confirmation-modal
@@ -52,18 +55,21 @@
     [title]="'Gestionar Prenda'"
     [message]="'¿Qué deseas hacer con esta prenda?'"
     [options]="garmentConfirmationOptions"
-    (close)="closeGarmentConfirmationModal()">
+    (close)="closeGarmentConfirmationModal()"
+  >
   </app-confirmation-modal>
 
   <app-outfit-form
     [open]="showOutfitForm"
     [outfitToEdit]="selectedOutfit"
-    (close)="closeOutfitForm()">
+    (close)="closeOutfitForm()"
+  >
   </app-outfit-form>
 
   <app-garment-form
     [open]="showGarmentForm"
     [garment]="selectedGarment ?? undefined"
-    (close)="closeGarmentForm()">
+    (close)="closeGarmentForm()"
+  >
   </app-garment-form>
 </div>

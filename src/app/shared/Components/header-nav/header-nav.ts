@@ -14,18 +14,34 @@ import { ConfirmationModal, ConfirmationOption } from '../confirmation-modal/con
 })
 export class HeaderNav {
   currentUrl: string = '';
-  showLogoutModal = false;
+  showMenuModal = false;
+  showDeleteModal = false;
   mobileMenuOpen = false;
 
-  logoutOptions: ConfirmationOption[] = [
+  profileOptions: ConfirmationOption[] = [
     {
-      text: 'Confirmar',
-      action: () => this.handleConfirm()
+      text: 'Cerrar sesión',
+      action: () => this.handleLogout(),
+    },
+    {
+      text: 'Borrar usuario',
+      action: () => this.handleDeleteOptions(),
     },
     {
       text: 'Cancelar',
-      action: () => this.handleCancel()
-    }
+      action: () => this.handleCancel(),
+    },
+  ];
+
+  deleteOptions: ConfirmationOption[] = [
+    {
+      text: 'Confirmar',
+      action: () => this.handleDelete(),
+    },
+    {
+      text: 'Cancelar',
+      action: () => this.handleCancel(),
+    },
   ];
 
   constructor(
@@ -35,12 +51,10 @@ export class HeaderNav {
   ) {
     this.currentUrl = this.router.url;
 
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.currentUrl = this.router.url;
-        this.changeDetectorRef.markForCheck();
-      });
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.currentUrl = this.router.url;
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   navigate(route: string) {
@@ -51,21 +65,36 @@ export class HeaderNav {
     return this.currentUrl === route;
   }
 
-  openLogoutModal() {
-    this.showLogoutModal = true;
+  openProfileModal() {
+    this.showMenuModal = true;
   }
 
-  closeLogoutModal() {
-    this.showLogoutModal = false;
+  closeProfileModal() {
+    this.showMenuModal = false;
   }
 
-  handleConfirm() {
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+  }
+
+  handleDeleteOptions() {
+    this.showDeleteModal = true;
+  }
+
+  handleLogout() {
     this.store.dispatch(AuthActions.logout());
-    this.closeLogoutModal();
+    this.closeProfileModal();
+  }
+
+  handleDelete() {
+    this.store.dispatch(AuthActions.deleteUser());
+    this.closeProfileModal();
+    this.closeDeleteModal();
   }
 
   handleCancel() {
-    this.closeLogoutModal();
+    this.closeProfileModal();
+    this.closeDeleteModal();
   }
 
   toggleMobileMenu() {

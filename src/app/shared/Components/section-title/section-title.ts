@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common'
-
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-section-title',

@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { ModalSection, ModalItemDisplay } from '../modal-selector/modal-selector';
@@ -17,7 +26,7 @@ import { FabricType } from '../../Enum/fabric-type';
   selector: 'app-outfit-form',
   imports: [CommonModule, Button, ImageUrlPipe],
   templateUrl: './outfit-form.html',
-  styleUrl: './outfit-form.scss'
+  styleUrl: './outfit-form.scss',
 })
 export class OutfitForm implements OnInit, OnChanges {
   @Input() open = false;
@@ -36,7 +45,7 @@ export class OutfitForm implements OnInit, OnChanges {
 
   garmentDisplay: ModalItemDisplay<GarmentDTO> = {
     getIcon: (garment) => garment.picture,
-    getLabel: (garment) => garment.type
+    getLabel: (garment) => garment.type,
   };
 
   constructor(
@@ -47,7 +56,7 @@ export class OutfitForm implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.store.select(selectAllGarments).subscribe(garments => {
+    this.store.select(selectAllGarments).subscribe((garments) => {
       this.allGarments = garments;
       this.updateGarmentModalSections();
       this.populateFromOutfit();
@@ -70,17 +79,15 @@ export class OutfitForm implements OnInit, OnChanges {
   }
 
   updateGarmentModalSections() {
-    const topGarments = this.allGarments.filter(g => g.supType === GarmentSection.Top);
-    const bottomGarments = this.allGarments.filter(g => g.supType === GarmentSection.Bottom);
+    const topGarments = this.allGarments.filter((g) => g.supType === GarmentSection.Top);
+    const bottomGarments = this.allGarments.filter((g) => g.supType === GarmentSection.Bottom);
 
     this.garmentModalSections = [
       { title: 'Parte Superior', items: topGarments },
-      { title: 'Parte Inferior', items: bottomGarments }
+      { title: 'Parte Inferior', items: bottomGarments },
     ];
 
-    this.allGarmentsModalSections = [
-      { title: 'Todas las Prendas', items: this.allGarments }
-    ];
+    this.allGarmentsModalSections = [{ title: 'Todas las Prendas', items: this.allGarments }];
   }
 
   openGarmentModal() {
@@ -100,41 +107,46 @@ export class OutfitForm implements OnInit, OnChanges {
   }
 
   toggleGarmentSelection(garment: GarmentDTO) {
-    const index = this.selectedGarments.findIndex(g => g.id === garment.id);
+    const index = this.selectedGarments.findIndex((g) => g.id === garment.id);
     if (index !== -1) {
-      this.selectedGarments = this.selectedGarments.filter(g => g.id !== garment.id);
+      this.selectedGarments = this.selectedGarments.filter((g) => g.id !== garment.id);
     } else {
       this.selectedGarments = [...this.selectedGarments, garment];
     }
   }
 
   isGarmentSelected(garmentId: string): boolean {
-    return this.selectedGarments.some(g => g.id === garmentId);
+    return this.selectedGarments.some((g) => g.id === garmentId);
   }
 
   fabricsToString(fabrics: FabricType[]): string {
-    return fabrics.map(word => word.toUpperCase()).join('/');
+    return fabrics.map((word) => word.toUpperCase()).join('/');
   }
 
   isLeastUsed(garment: GarmentDTO): boolean {
     if (this.allGarments.length === 0) return false;
-    const avgOutfited = this.allGarments.reduce((sum, g) => sum + g.outfited, 0) / this.allGarments.length;
+    const avgOutfited =
+      this.allGarments.reduce((sum, g) => sum + g.outfited, 0) / this.allGarments.length;
     return garment.outfited < avgOutfited;
   }
 
   saveOutfit() {
     if (this.selectedGarments.length === 0) {
-      this.sharedService.showToast('Por favor, selecciona al menos una prenda para crear un conjunto');
+      this.sharedService.showToast(
+        'Por favor, selecciona al menos una prenda para crear un conjunto'
+      );
       return;
     }
 
-    const garmentIds = this.selectedGarments.map(g => g.id);
+    const garmentIds = this.selectedGarments.map((g) => g.id);
 
     if (this.isEditMode && this.outfitToEdit) {
-      this.store.dispatch(OutfitActions.updateOutfit({
-        id: this.outfitToEdit.id,
-        garmentIds
-      }));
+      this.store.dispatch(
+        OutfitActions.updateOutfit({
+          id: this.outfitToEdit.id,
+          garmentIds,
+        })
+      );
       this.sharedService.showToast('¡Conjunto actualizado!', true);
     } else {
       this.store.dispatch(OutfitActions.createOutfit({ garmentIds }));
@@ -166,32 +178,31 @@ export class OutfitForm implements OnInit, OnChanges {
       return;
     }
 
-    const targetSection = baseGarment.supType === GarmentSection.Top
-      ? GarmentSection.Bottom
-      : GarmentSection.Top;
+    const targetSection =
+      baseGarment.supType === GarmentSection.Top ? GarmentSection.Bottom : GarmentSection.Top;
 
-    this.colorApiService.recommendComplementaryGarment(
-      baseGarment,
-      this.allGarments,
-      targetSection
-    ).subscribe({
-      next: (garmentId) => {
-        if (!garmentId) {
-          this.sharedService.showToast('No se encontró una prenda compatible para esta temporada');
-          return;
-        }
-        const recommended = this.allGarments.find(g => g.id === garmentId);
-        if (recommended) {
-          this.selectedGarments = [...this.selectedGarments, recommended];
-          this.changeDetectorRef.detectChanges();
-          this.sharedService.showToast('¡Prenda recomendada añadida!', true);
-        } else {
-          this.sharedService.showToast('No se encontró una prenda compatible');
-        }
-      },
-      error: () => {
-        this.sharedService.showToast('Error al obtener recomendación');
-      }
-    });
+    this.colorApiService
+      .recommendComplementaryGarment(baseGarment, this.allGarments, targetSection)
+      .subscribe({
+        next: (garmentId) => {
+          if (!garmentId) {
+            this.sharedService.showToast(
+              'No se encontró una prenda compatible para esta temporada'
+            );
+            return;
+          }
+          const recommended = this.allGarments.find((g) => g.id === garmentId);
+          if (recommended) {
+            this.selectedGarments = [...this.selectedGarments, recommended];
+            this.changeDetectorRef.detectChanges();
+            this.sharedService.showToast('¡Prenda recomendada añadida!', true);
+          } else {
+            this.sharedService.showToast('No se encontró una prenda compatible');
+          }
+        },
+        error: () => {
+          this.sharedService.showToast('Error al obtener recomendación');
+        },
+      });
   }
 }

@@ -5,95 +5,95 @@
 \*------------------------------------*/
 
 .calendar {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1rem;
+  justify-content: center;
+
+  &__weekdayHeader {
+    display: grid;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__grid {
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+  }
+
+  &__gradientWrapper {
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    background: linear-gradient($color-gradient);
     display: flex;
-    flex-flow: column nowrap;
-    padding: 1rem;
     justify-content: center;
- 
-    &__weekdayHeader {
-        display: grid;
-        font-family: "Inter", sans-serif;
-        font-size: 20px;
-        font-weight: bold;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        gap: 1.5rem;
-        padding-bottom: 2rem;
-        text-align: center;
-    }
+    padding: 0px;
+    transition: padding 0.25s;
+    width: 100%;
+  }
 
-    &__grid {
-        align-items: center;
-        display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        gap: 1.5rem;
-        justify-items: center;
-    }
+  &__gradientWrapper--selected {
+    padding: 3px;
+  }
 
-    &__gradientWrapper {
-        align-items: center;
-        aspect-ratio: 1 / 1;
-        box-sizing: border-box;
-        background: linear-gradient($color-gradient);
-        display: flex;
-        justify-content: center;
-        padding: 0px;
-        transition: padding .25s;
-        width: 100%;
-    }
+  &__dayButton {
+    aspect-ratio: 1 / 1;
+    appearance: none;
+    box-sizing: border-box;
+    border: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0;
+    width: 100%;
+  }
 
-    &__gradientWrapper--selected {
-        padding: 3px;
-    }
-    
-    &__dayButton {
-        aspect-ratio: 1 / 1;
-        appearance: none;
-        box-sizing: border-box;
-        border: 0;
-        font-family: "Inter", sans-serif;
-        font-size: 20px;
-        font-weight: 400;
-        padding:0;
-        width: 100%;
-    }
+  &__dayButton--disabled {
+    background-color: $color-disabled-grey;
+  }
 
-    &__dayButton--disabled {
-        background-color: $color-disabled-grey;
-    }
+  &__selector {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+  }
 
-    &__selector {
-        display: flex;
-        flex-flow: row nowrap;
-        gap: 0.5rem;
-        justify-content: center;
-        align-items: center;
-        padding-top: 2rem;
-    }
+  &__monthLabel {
+    font-family: 'Inria Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+  }
 
-    &__monthLabel {
-        font-family: "Inria Sans", sans-serif;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: normal;
-        text-align: center;
-    }
+  &__selectorButton {
+    appearance: none;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
 
-    &__selectorButton {
-        appearance: none;
-        border: 0;
-        background: none;
-        cursor: pointer;
-    }
+  &__selectorButton--alt {
+    appearance: none;
+    border: 0;
+    background: none;
+    transform: scale(-1, 1);
+    cursor: pointer;
+  }
 
-    &__selectorButton--alt {
-        appearance: none;
-        border: 0;
-        background: none;
-        transform: scale(-1, 1);
-        cursor: pointer;
-    }
-
-    &__selectorButton--disabled {
-        opacity: 0.5;
-    }
+  &__selectorButton--disabled {
+    opacity: 0.5;
+  }
 }

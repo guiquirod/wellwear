@@ -3,45 +3,47 @@
   <div class="outfit-form" (click)="$event.stopPropagation()">
     <h1 class="outfit-form__title">Crear Nuevo Conjunto</h1>
     <div class="outfit-form__garments">
-       @for (section of garmentModalSections; track $index) {
-          <h2 class="outfit-form__section-title">{{section.title}}</h2>
-          <section class="outfit-form__garment-grid">
-          @for (item of section.items; track item.id) {
-            <div class="outfit-form__garment-option-container">
-              <button
-                  type="button"
-                  class="outfit-form__garment-option"
-                  [ngClass]="{'outfit-form__garment-option--selected': isGarmentSelected(item.id)}"
-                  (click)="toggleGarmentSelection(item)">
-                  <img [src]="item.picture | imageUrl" class="outfit-form__garment-image" [alt]="item.type">
-              </button>
-              <small class="outfit-form__garment-option__detail-text">{{fabricsToString(item.fabricType)}}</small>
-              @if (isLeastUsed(item)) {
-                <small class="outfit-form__garment-option__label">Poco conjuntado</small>
-              }
-              </div>
-          } @empty {
-              <p class="outfit-form__empty-text">No hay prendas en esta sección</p>
+      @for (section of garmentModalSections; track $index) {
+      <h2 class="outfit-form__section-title">{{ section.title }}</h2>
+      <section class="outfit-form__garment-grid">
+        @for (item of section.items; track item.id) {
+        <div class="outfit-form__garment-option-container">
+          <button
+            type="button"
+            class="outfit-form__garment-option"
+            [ngClass]="{ 'outfit-form__garment-option--selected': isGarmentSelected(item.id) }"
+            (click)="toggleGarmentSelection(item)"
+          >
+            <img
+              [src]="item.picture | imageUrl"
+              class="outfit-form__garment-image"
+              [alt]="item.type"
+            />
+          </button>
+          <small class="outfit-form__garment-option__detail-text">{{
+            fabricsToString(item.fabricType)
+          }}</small>
+          @if (isLeastUsed(item)) {
+          <small class="outfit-form__garment-option__label">Poco conjuntado</small>
           }
-          </section>
+        </div>
+        } @empty {
+        <p class="outfit-form__empty-text">No hay prendas en esta sección</p>
+        }
+      </section>
       } @empty {
-          <p class="outfit-form__empty-text">No tienes prendas disponibles. ¡Añade algunas primero!</p>
+      <p class="outfit-form__empty-text">No tienes prendas disponibles. ¡Añade algunas primero!</p>
       }
     </div>
     <div class="outfit-form__actions">
-        <app-button
-          [title]="'Completar conjunto'"
-          (action)="recommendGarment()"
-          [disabled]="cantRecommend()">
-        </app-button>
       <app-button
-        [title]="'Guardar conjunto'"
-        (action)="saveOutfit()">
+        [title]="'Completar conjunto'"
+        (action)="recommendGarment()"
+        [disabled]="cantRecommend()"
+      >
       </app-button>
-      <app-button
-        [title]="'Cancelar'"
-        (action)="cancel()">
-      </app-button>
+      <app-button [title]="'Guardar conjunto'" (action)="saveOutfit()"> </app-button>
+      <app-button [title]="'Cancelar'" (action)="cancel()"> </app-button>
     </div>
   </div>
 </div>

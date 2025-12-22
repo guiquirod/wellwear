@@ -14,19 +14,20 @@ export const selectAllAchievements = createSelector(
   (state: AchievementState) => state?.achievements || []
 );
 
-export const selectDailyAchievements = createSelector(
-  selectAllAchievements,
-  (achievements) => achievements.filter(achievement => achievement.type === AchievementSection.Daily)
+export const selectDailyAchievements = createSelector(selectAllAchievements, (achievements) =>
+  achievements.filter((achievement) => achievement.type === AchievementSection.Daily)
 );
 
-export const selectWeeklyAchievements = createSelector(
-  selectAllAchievements,
-  (achievements) => achievements.filter(achievement => achievement.type === AchievementSection.Weekly)
+export const selectWeeklyAchievements = createSelector(selectAllAchievements, (achievements) =>
+  achievements.filter((achievement) => achievement.type === AchievementSection.Weekly)
 );
 
-export const selectMonthlyAchievements = createSelector(
-  selectAllAchievements,
-  (achievements) => achievements.filter(achievement => achievement.type === AchievementSection.Monthly)
+export const selectMonthlyAchievements = createSelector(selectAllAchievements, (achievements) =>
+  achievements.filter((achievement) => achievement.type === AchievementSection.Monthly)
+);
+
+export const selectAutomaticAchievements = createSelector(selectAllAchievements, (achievements) =>
+  achievements.filter((achievement) => achievement.type === AchievementSection.Automatic)
 );
 
 export const selectAchievementsLoading = createSelector(

@@ -2,7 +2,6 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { AuthActions, AuthApiActions } from './auth.actions';
 
 export interface AuthState {
-  id: number | null;
   email: string | null;
   name: string | null;
   isAuthenticated: boolean;
@@ -11,7 +10,6 @@ export interface AuthState {
 }
 
 export const initialState: AuthState = {
-  id: null,
   email: null,
   name: null,
   isAuthenticated: false,
@@ -30,7 +28,6 @@ const _authReducer = createReducer(
 
   on(AuthApiActions.loginSuccess, (state, { user }) => ({
     ...state,
-    id: user.id!,
     email: user.email,
     name: user.name,
     isAuthenticated: true,
@@ -53,7 +50,6 @@ const _authReducer = createReducer(
 
   on(AuthApiActions.registerSuccess, (state, { user }) => ({
     ...state,
-    id: user.id!,
     email: user.email,
     name: user.name,
     isAuthenticated: true,
@@ -76,9 +72,29 @@ const _authReducer = createReducer(
     ...initialState,
   })),
 
+  on(AuthApiActions.logoutFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  on(AuthActions.deleteUser, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(AuthApiActions.deleteUserSuccess, () => ({
+    ...initialState,
+  })),
+
+  on(AuthApiActions.deleteUserFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
   on(AuthApiActions.loadAuthFromStorageSuccess, (state, { user }) => ({
     ...state,
-    id: user.id!,
     email: user.email,
     name: user.name,
     isAuthenticated: true,

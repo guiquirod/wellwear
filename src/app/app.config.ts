@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
@@ -20,6 +24,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
     provideStore(appReducers),
-    provideEffects(AuthEffects, GarmentEffects, OutfitEffects, AchievementEffects)
-  ]
+    provideEffects(AuthEffects, GarmentEffects, OutfitEffects, AchievementEffects),
+  ],
 };

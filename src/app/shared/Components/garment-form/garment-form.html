@@ -48,17 +48,15 @@
         class="garment-form__file-input"
       />
       @if (selectedFileName) {
-        <span class="garment-form__file-name">{{ selectedFileName }}</span>
-      }
-
-      @if (imagePreview) {
-        <div class="garment-form__image-preview">
-          <img
-            [src]="isEditMode && !selectedFile ? (imagePreview | imageUrl) : imagePreview"
-            alt="Vista previa de la imagen"
-            class="garment-form__image-container"
-          />
-        </div>
+      <span class="garment-form__file-name">{{ selectedFileName }}</span>
+      } @if (imagePreview) {
+      <div class="garment-form__image-preview">
+        <img
+          [src]="isEditMode && !selectedFile ? (imagePreview | imageUrl) : imagePreview"
+          alt="Vista previa de la imagen"
+          class="garment-form__image-container"
+        />
+      </div>
       }
     </div>
 
@@ -76,7 +74,11 @@
       </label>
 
       <label class="garment-form__checkbox-container">
-        <input class="garment-form__checkbox-input" type="checkbox" formControlName="isSecondHand" />
+        <input
+          class="garment-form__checkbox-input"
+          type="checkbox"
+          formControlName="isSecondHand"
+        />
         <span>Segunda mano</span>
       </label>
     </div>

@@ -8,17 +8,24 @@
   transition: background-color 0.3s ease;
   width: 100%;
   min-width: 325px;
-  max-width: 6300px;
   margin: 0 auto;
-  font-family: 'IBM Plex Sans';
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
 
   &__info {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
     background: $color-primary;
     color: $color-secondary-text;
     padding: 1.5rem;
+    gap: 1rem;
+
+    @media (min-width: $maxSMobileWidth) {
+      padding: 2rem;
+      flex-flow: row nowrap;
+    }
   }
 
   &__checkbox-container {

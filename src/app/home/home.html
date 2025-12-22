@@ -23,17 +23,32 @@
       </app-button>
       }
     </div>
-    <app-section-title [title]="'Logros Diarios'"></app-section-title>
+    <app-section-title [title]="'Retos Automáticos'"></app-section-title>
+    <div class="home__achievements">
+      @for (achievement of automaticAchievements$ | async; track achievement.id) {
+      <app-achievement-row
+        [infoText]="achievement.title"
+        [points]="achievement.points"
+        [isCompleted]="achievement.completed"
+        [isAutomatic]="true"
+      >
+      </app-achievement-row>
+      } @empty {
+      <p class="home__empty-text">No hay retos automáticos disponibles</p>
+      }
+    </div>
+    <app-section-title [title]="'Retos Diarios'"></app-section-title>
     <div class="home__achievements">
       @for (achievement of dailyAchievements$ | async; track achievement.id) {
       <app-achievement-row
         [infoText]="achievement.title"
+        [points]="achievement.points"
         [isCompleted]="achievement.completed"
         (checkboxChange)="onAchievementComplete(achievement.id)"
       >
       </app-achievement-row>
       } @empty {
-      <p class="home__empty-text">No hay logros diarios disponibles</p>
+      <p class="home__empty-text">No hay retos diarios disponibles</p>
       }
     </div>
   </section>

@@ -14,7 +14,6 @@ import { filter } from 'rxjs/operators';
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
-  protected readonly title = signal('wellwear');
   protected showNavigation = false;
 
   constructor(

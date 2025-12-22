@@ -63,7 +63,7 @@ const _garmentReducer = createReducer(
 
   on(GarmentApiActions.updateGarmentSuccess, (state, { garment }) => ({
     ...state,
-    garments: state.garments.map(g => g.id === garment.id ? garment : g),
+    garments: state.garments.map((g) => (g.id === garment.id ? garment : g)),
     loading: false,
     error: null,
   })),
@@ -82,7 +82,7 @@ const _garmentReducer = createReducer(
 
   on(GarmentApiActions.deleteGarmentSuccess, (state, { id }) => ({
     ...state,
-    garments: state.garments.filter(g => g.id !== id),
+    garments: state.garments.filter((g) => g.id !== id),
     loading: false,
     error: null,
   })),

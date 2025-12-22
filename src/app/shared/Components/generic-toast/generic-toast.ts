@@ -27,7 +27,7 @@ export class GenericToast implements OnDestroy {
 
   private showToast(message: string, success: boolean = false): void {
     this.message.set(message);
-    this.success.set(success)
+    this.success.set(success);
     this.isVisible.set(true);
 
     setTimeout(() => {

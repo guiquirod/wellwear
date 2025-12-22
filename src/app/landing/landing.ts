@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Button } from '../shared/Components/button/button';
 import { AuthModalComponent } from '../shared/Components/auth-modal/auth-modal.component';
+import { GenericToast } from '../shared/Components/generic-toast/generic-toast';
 
 @Component({
   selector: 'app-landing',
-  imports: [Button, AuthModalComponent],
+  imports: [Button, AuthModalComponent, GenericToast],
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
 })

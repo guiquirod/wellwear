@@ -3,18 +3,13 @@
   <div class="confirmation-modal" (click)="$event.stopPropagation()">
     <div class="confirmation-modal__content">
       @if (title) {
-        <h2 class="confirmation-modal__title">{{ title }}</h2>
-      }
-      @if (message) {
-        <p class="confirmation-modal__message">{{ message }}</p>
+      <h2 class="confirmation-modal__title">{{ title }}</h2>
+      } @if (message) {
+      <p class="confirmation-modal__message">{{ message }}</p>
       }
       <div class="confirmation-modal__actions">
         @for (option of options; track option.text) {
-          <app-button
-            [title]="option.text"
-            (action)="option.action()"
-          >
-          </app-button>
+        <app-button [title]="option.text" (action)="option.action()"> </app-button>
         }
       </div>
     </div>

@@ -1,31 +1,36 @@
 <div class="dropdown">
   <button class="dropdown__button" (click)="toggleDropdown()">
     <span class="dropdown__title">{{ getLabelText() | titlecase }}</span>
-    <img [src]="'assets/icons/dropdown.png'" class="dropdown__icon" [ngClass]=" { 'dropdown__icon--active' : isOpen }" alt="">
+    <img
+      [src]="'assets/icons/dropdown.png'"
+      class="dropdown__icon"
+      [ngClass]="{ 'dropdown__icon--active': isOpen }"
+      alt=""
+    />
   </button>
 
   @if (isOpen) {
-    <div class="dropdown__menu">
-      @for (option of options; track option) {
-        <label class="dropdown__option">
-          @if (singleSelection) {
-            <input
-              type="radio"
-              [checked]="isSelected(option)"
-              (change)="toggleOption(option)"
-              class="dropdown__checkbox"
-            >
-          } @else {
-            <input
-              type="checkbox"
-              [checked]="isSelected(option)"
-              (change)="toggleOption(option)"
-              class="dropdown__checkbox"
-            >
-          }
-          <span class="dropdown__label">{{ option | titlecase }}</span>
-        </label>
+  <div class="dropdown__menu">
+    @for (option of options; track option) {
+    <label class="dropdown__option">
+      @if (singleSelection) {
+      <input
+        type="radio"
+        [checked]="isSelected(option)"
+        (change)="toggleOption(option)"
+        class="dropdown__checkbox"
+      />
+      } @else {
+      <input
+        type="checkbox"
+        [checked]="isSelected(option)"
+        (change)="toggleOption(option)"
+        class="dropdown__checkbox"
+      />
       }
-    </div>
+      <span class="dropdown__label">{{ option | titlecase }}</span>
+    </label>
+    }
+  </div>
   }
 </div>

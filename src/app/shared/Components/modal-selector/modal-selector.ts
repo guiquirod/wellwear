@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AddGarmentButton } from '../add-garment-button/add-garment-button';
 
 export interface ModalSection<T> {
@@ -14,7 +14,7 @@ export interface ModalItemDisplay<T> {
 
 @Component({
   selector: 'app-modal-selector',
-  imports: [CommonModule, AddGarmentButton],
+  imports: [CommonModule, NgOptimizedImage, AddGarmentButton],
   templateUrl: './modal-selector.html',
   styleUrl: './modal-selector.scss',
 })

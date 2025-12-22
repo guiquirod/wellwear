@@ -1,9 +1,10 @@
 <div class="color-picker">
-  <label for="color" class="color-picker__label">{{title}}</label>
+  <label for="color" class="color-picker__label">{{ title }}</label>
   <input
     type="color"
     id="color"
     class="color-picker__input"
     [value]="value"
-    (input)="onColorChange($event)">
+    (input)="onColorChange($event)"
+  />
 </div>

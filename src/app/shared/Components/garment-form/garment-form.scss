@@ -20,7 +20,6 @@
 
 
 
-
 /*------------------------------------*\
   #GARMENT FORM MODAL
 \*------------------------------------*/
@@ -29,10 +28,14 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
-  padding: 2rem 8rem;
+  padding: 2rem;
   overflow-y: auto;
   animation: slideIn 0.3s ease-out;
   background: linear-gradient($color-gradient);
+
+  @media (min-width: $maxLMobileWidth) {
+    padding: 2rem 8rem;
+  }
 
   &__file-container {
     display: flex;
@@ -42,7 +45,6 @@
 
   &__label {
     margin-bottom: 0.5rem;
-    font-family: 'IBM Plex Sans';
     font-weight: 500;
   }
 
@@ -50,7 +52,6 @@
     padding: 0.5rem;
     border: 1px solid $color-secondary-text;
     border-radius: 4px;
-    font-family: 'IBM Plex Sans';
     cursor: pointer;
   }
 
@@ -60,7 +61,6 @@
 
   &__file-name {
     margin-top: 0.5rem;
-    font-family: 'IBM Plex Sans';
     font-size: 14px;
     color: $color-primary-grey;
     font-style: italic;
@@ -95,7 +95,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: 'IBM Plex Sans';
     cursor: pointer;
   }
 

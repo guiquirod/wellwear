@@ -1,34 +1,32 @@
 @if (open) {
 <div class="modal-wrapper" (click)="close.emit()">
-    <div class="modal" (click)="$event.stopPropagation()">
-        <div class="modal__grid">
-            @for (section of sections; track $index) {
-                <h2 class="modal__grid-section-title">{{section.title}}</h2>
-                <section class="modal__grid-section">
-                @for (item of section.items; track $index) {
-                    <button
-                        type="button"
-                        class="modal__option"
-                        (click)="pickOption(item)">
-                        <img [src]="display.getIcon(item)" class="modal__option-image" alt="{{display.getLabel(item)}}">
-                        <span class="modal__option-text">{{display.getLabel(item)}}</span>
-                    </button>
-                }
-                @if (showAddButton) {
-                    <app-add-garment-button
-                        [infoText]="adButtonText"
-                        (action)="handleAddClick()">
-                    </app-add-garment-button>
-                }
-                </section>
-            } @empty {
-                 @if (showAddButton) {
-                    <app-add-garment-button
-                        (action)="handleAddClick()">
-                    </app-add-garment-button>
-                }
-            }
-        </div>
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal__grid">
+      @for (section of sections; track $index) {
+      <h2 class="modal__grid-section-title">{{ section.title }}</h2>
+      <section class="modal__grid-section">
+        @for (item of section.items; track $index) {
+        <button type="button" class="modal__option" (click)="pickOption(item)">
+          <div class="modal__option-image-container">
+            <img
+              [ngSrc]="display.getIcon(item)"
+              class="modal__option-image"
+              alt="{{ display.getLabel(item) }}"
+              width="180"
+              height="180"
+            />
+          </div>
+          <span class="modal__option-text">{{ display.getLabel(item) }}</span>
+        </button>
+        } @if (showAddButton) {
+        <app-add-garment-button [infoText]="adButtonText" (action)="handleAddClick()">
+        </app-add-garment-button>
+        }
+      </section>
+      } @empty { @if (showAddButton) {
+      <app-add-garment-button (action)="handleAddClick()"> </app-add-garment-button>
+      } }
     </div>
+  </div>
 </div>
 }

@@ -5,39 +5,39 @@
 \*------------------------------------*/
 
 .product-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 2rem;
+  background: linear-gradient($color-gradient);
+  position: relative;
+
+  &__title {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  &__row {
     display: grid;
-    grid-template-rows: auto 1fr;
-    padding: 2rem;
-    background: linear-gradient($color-gradient);
-    position: relative;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding-top: 1rem;
+  }
 
-     &__title {
-        font-weight: bold;
-        font-size: 24px;
-    }
+  &--second-style {
+    background: $color-secondary;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0 0 0 $color-disabled;
+  }
 
-    &__row {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
-        padding-top: 1rem;
-    }
+  &--second-style:hover {
+    box-shadow: 0 8px 8px $color-disabled;
+  }
 
-    &--second-style {
-        background: $color-secondary;
-        transition: box-shadow 0.3s ease-in-out;
-        box-shadow: 0 0 0 $color-disabled;
-    }
+  &--clickable {
+    cursor: pointer;
+  }
 
-     &--second-style:hover {
-        box-shadow: 0 8px 8px $color-disabled;
-    }
-
-    &--clickable {
-        cursor: pointer;
-    }
-
-    &__corner {
+  &__corner {
     position: absolute;
     z-index: 1;
     border-left: 2px $color-primary-text solid;
@@ -49,7 +49,7 @@
     animation: blink 1.5s ease-in-out infinite;
   }
 
-    &__corner--alt {
+  &__corner--alt {
     position: absolute;
     z-index: 1;
     border-right: 2px $color-primary-text solid;

@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './add-garment-button.scss',
 })
 export class AddGarmentButton {
-  @Input() infoText = ''
+  @Input() infoText = '';
   @Output() action = new EventEmitter<void>();
 
   handleClick() {

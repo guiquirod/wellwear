@@ -2,7 +2,9 @@
 <div class="auth-modal-wrapper" (click)="closeModal.emit()">
   <div class="auth-modal" (click)="$event.stopPropagation()">
     <div class="auth-modal__grid">
-      <h2 class="auth-modal__grid-title">{{ isLoginMode ? 'Iniciar sesión' : 'Crea tu cuenta' }}</h2>
+      <h2 class="auth-modal__grid-title">
+        {{ isLoginMode ? 'Iniciar sesión' : 'Crea tu cuenta' }}
+      </h2>
       @if (isLoginMode) {
       <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-modal__form">
         <div class="auth-modal__form-group">

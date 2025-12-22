@@ -7,7 +7,7 @@ import { GarmentDTO } from '../Models/garment.dto';
 import { ApiResponse } from '../Models/api-response.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GarmentService {
   private urlWellwearApi: string;
@@ -18,7 +18,10 @@ export class GarmentService {
     this.urlWellwearApi = 'http://localhost/' + this.controller;
   }
 
-  createGarment(garment: Omit<GarmentDTO, 'id' | 'picture'>, imageFile: File): Observable<ApiResponse<GarmentDTO>> {
+  createGarment(
+    garment: Omit<GarmentDTO, 'id' | 'picture'>,
+    imageFile: File
+  ): Observable<ApiResponse<GarmentDTO>> {
     const formData = new FormData();
     formData.append('type', garment.type.toString());
     formData.append('supType', garment.supType.toString());
@@ -31,23 +34,25 @@ export class GarmentService {
     formData.append('picture', imageFile, imageFile.name);
 
     return this.http
-      .post<ApiResponse<GarmentDTO>>(`${this.urlWellwearApi}/create-garment.php`, formData, { withCredentials: true })
+      .post<ApiResponse<GarmentDTO>>(`${this.urlWellwearApi}/create-garment.php`, formData, {
+        withCredentials: true,
+      })
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getGarments(): Observable<GarmentDTO[]> {
+  getGarments(): Observable<ApiResponse<GarmentDTO[]>> {
     return this.http
-      .get<GarmentDTO[]>(`${this.urlWellwearApi}/get-garments.php`, { withCredentials: true })
+      .get<ApiResponse<GarmentDTO[]>>(`${this.urlWellwearApi}/get-garments.php`, {
+        withCredentials: true,
+      })
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getGarmentById(id: string): Observable<GarmentDTO> {
-    return this.http
-      .get<GarmentDTO>(`${this.urlWellwearApi}/get-garment.php?id=${id}`, { withCredentials: true })
-      .pipe(catchError(this.sharedService.handleError));
-  }
-
-  updateGarment(id: string, garment: Partial<GarmentDTO>, imageFile?: File): Observable<ApiResponse<GarmentDTO>> {
+  updateGarment(
+    id: string,
+    garment: Partial<GarmentDTO>,
+    imageFile?: File
+  ): Observable<ApiResponse<GarmentDTO>> {
     const formData = new FormData();
 
     if (garment.type) {
@@ -79,7 +84,11 @@ export class GarmentService {
     }
 
     return this.http
-      .post<ApiResponse<GarmentDTO>>(`${this.urlWellwearApi}/update-garment.php?id=${id}`, formData, { withCredentials: true })
+      .post<ApiResponse<GarmentDTO>>(
+        `${this.urlWellwearApi}/update-garment.php?id=${id}`,
+        formData,
+        { withCredentials: true }
+      )
       .pipe(catchError(this.sharedService.handleError));
   }
 
@@ -87,7 +96,7 @@ export class GarmentService {
     return this.http
       .delete<ApiResponse>(`${this.urlWellwearApi}/delete-garment.php`, {
         body: { garmentId: id },
-        withCredentials: true
+        withCredentials: true,
       })
       .pipe(catchError(this.sharedService.handleError));
   }

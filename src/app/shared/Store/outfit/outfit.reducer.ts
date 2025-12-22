@@ -84,7 +84,7 @@ const _outfitReducer = createReducer(
 
   on(OutfitApiActions.updateOutfitSuccess, (state, { outfit }) => ({
     ...state,
-    outfits: state.outfits.map(o => o.id === outfit.id ? outfit : o),
+    outfits: state.outfits.map((o) => (o.id === outfit.id ? outfit : o)),
     loading: false,
     error: null,
   })),
@@ -103,7 +103,7 @@ const _outfitReducer = createReducer(
 
   on(OutfitApiActions.deleteOutfitSuccess, (state, { id }) => ({
     ...state,
-    outfits: state.outfits.filter(o => o.id !== id),
+    outfits: state.outfits.filter((o) => o.id !== id),
     loading: false,
     error: null,
   })),

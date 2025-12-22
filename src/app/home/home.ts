@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { ContextHeader } from '../shared/Components/context-header/context-header';
-import { SectionTitle } from "../shared/Components/section-title/section-title";
+import { SectionTitle } from '../shared/Components/section-title/section-title';
 import { ProductContainer } from '../shared/Components/product-container/product-container';
 import { Button } from '../shared/Components/button/button';
-import { ModalSelector, ModalSection, ModalItemDisplay } from '../shared/Components/modal-selector/modal-selector';
+import {
+  ModalSelector,
+  ModalSection,
+  ModalItemDisplay,
+} from '../shared/Components/modal-selector/modal-selector';
 import { GarmentForm } from '../shared/Components/garment-form/garment-form';
 import { OutfitForm } from '../shared/Components/outfit-form/outfit-form';
 import { GenericToast } from '../shared/Components/generic-toast/generic-toast';
@@ -19,11 +23,25 @@ import { OutfitActions } from '../shared/Store/outfit/outfit.actions';
 import { AchievementActions } from '../shared/Store/achievement/achievement.actions';
 import { selectAllGarments } from '../shared/Store/garment/garment.selectors';
 import { selectAllOutfits, selectTodayOutfits } from '../shared/Store/outfit/outfit.selectors';
-import { selectDailyAchievements } from '../shared/Store/achievement/achievement.selectors';
+import {
+  selectDailyAchievements,
+  selectAutomaticAchievements,
+} from '../shared/Store/achievement/achievement.selectors';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ContextHeader, SectionTitle, ProductContainer, Button, ModalSelector, GarmentForm, OutfitForm, GenericToast, AchievementRow],
+  imports: [
+    CommonModule,
+    ContextHeader,
+    SectionTitle,
+    ProductContainer,
+    Button,
+    ModalSelector,
+    GarmentForm,
+    OutfitForm,
+    GenericToast,
+    AchievementRow,
+  ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -37,6 +55,7 @@ export class Home implements OnInit {
   outfits$: Observable<OutfitWithGarments[]>;
   todayOutfits$: Observable<OutfitWithGarments[]>;
   dailyAchievements$: Observable<AchievementDTO[]>;
+  automaticAchievements$: Observable<AchievementDTO[]>;
   hasLessThanTwoGarments$: Observable<boolean>;
   hasNoOutfits$: Observable<boolean>;
 
@@ -44,37 +63,29 @@ export class Home implements OnInit {
 
   outfitDisplay: ModalItemDisplay<OutfitWithGarments> = {
     getIcon: (outfit) => {
-      return this.getImageUrl(outfit.garments.find(g => g.picture)?.picture ?? '');
+      return this.getImageUrl(outfit.garments.find((g) => g.picture)?.picture ?? '');
     },
-    getLabel: (outfit) => `(${outfit.garments.length} prendas)`
+    getLabel: (outfit) => `(${outfit.garments.length} prendas)`,
   };
 
-  constructor(
-    private store: Store
-  ) {
+  constructor(private store: Store) {
     this.garments$ = this.store.select(selectAllGarments);
     this.outfits$ = this.store.select(selectAllOutfits);
     this.todayOutfits$ = this.store.select(selectTodayOutfits);
     this.dailyAchievements$ = this.store.select(selectDailyAchievements);
 
-    this.hasLessThanTwoGarments$ = this.garments$.pipe(
-      map(garments => garments.length < 2)
-    );
+    this.hasLessThanTwoGarments$ = this.garments$.pipe(map((garments) => garments.length < 2));
+    this.hasNoOutfits$ = this.outfits$.pipe(map((outfits) => outfits.length === 0));
+    this.automaticAchievements$ = this.store.select(selectAutomaticAchievements);
 
-    this.hasNoOutfits$ = this.outfits$.pipe(
-      map(outfits => outfits.length === 0)
-    );
-
-    this.outfits$.subscribe(outfits => {
+    this.outfits$.subscribe((outfits) => {
       this.allOutfitsWithGarments = outfits;
       this.updateOutfitModalSections();
     });
   }
 
   updateOutfitModalSections() {
-    this.outfitModalSections = [
-      { title: 'Mis conjuntos', items: this.allOutfitsWithGarments }
-    ];
+    this.outfitModalSections = [{ title: 'Mis conjuntos', items: this.allOutfitsWithGarments }];
   }
 
   ngOnInit() {

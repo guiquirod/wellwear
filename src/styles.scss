@@ -23,7 +23,6 @@
   font-style: italic;
 }
 
-
 @font-face {
   font-family: "IBM Plex Sans";
   src: url(assets/fonts/IBM_Plex_Sans/IBMPlexSans-VariableFont_wdth\,wght.ttf) format("truetype-variations");
@@ -45,7 +44,6 @@
   font-style: normal;
 }
 
-
 @font-face {
   font-family: "Inria Sans";
   src: url(assets/fonts/Inria_Sans/InriaSans-Bold.ttf) format("truetype");
@@ -61,24 +59,11 @@
 }
 
 @font-face {
-  font-family: "Josefin Sans";
-  src: url(assets/fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf) format("truetype-variations");
-  font-weight: 100 700;
-  font-style: normal;
-}
-
-@font-face {
   font-family: "Museo Moderno";
   src: url(assets/fonts/MuseoModerno/MuseoModerno-VariableFont_wght.ttf) format("truetype-variations");
   font-weight: 100 700;
   font-style: normal;
 }
-
-
-
-
-
-
 
 /*------------------------------------*\
   #ANIMATIONS
@@ -96,7 +81,8 @@
 }
 
 @keyframes blink {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -145,7 +131,6 @@
   }
 }
 
-
 /*------------------------------------*\
   #VIEW TRANSITIONs
 \*------------------------------------*/
@@ -162,7 +147,7 @@
   mix-blend-mode: normal;
 }
 
-::view-transition-old(root){
+::view-transition-old(root) {
   animation-name: fadeOut;
   animation-duration: 0.3s;
   animation-timing-function: ease-in;
@@ -175,16 +160,13 @@
   animation-timing-function: ease-out;
 }
 
-
-
-
-
 /*------------------------------------*\
   #DEFAULT
 \*------------------------------------*/
 
-html, body {
-  font-family: "IBM Plex Sans";
+html,
+body {
+  font-family: 'IBM Plex Sans';
   margin: 0;
   font-size: 16px;
 }

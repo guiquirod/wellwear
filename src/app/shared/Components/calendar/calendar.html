@@ -1,41 +1,46 @@
 <div class="calendar">
-    <div class="calendar__weekdayHeader">
-        <div class="calendar__weekday">L</div>
-        <div class="calendar__weekday">M</div>
-        <div class="calendar__weekday">X</div>
-        <div class="calendar__weekday">J</div>
-        <div class="calendar__weekday">V</div>
-        <div class="calendar__weekday">S</div>
-        <div class="calendar__weekday">D</div>
+  <div class="calendar__weekdayHeader">
+    <div class="calendar__weekday">L</div>
+    <div class="calendar__weekday">M</div>
+    <div class="calendar__weekday">X</div>
+    <div class="calendar__weekday">J</div>
+    <div class="calendar__weekday">V</div>
+    <div class="calendar__weekday">S</div>
+    <div class="calendar__weekday">D</div>
+  </div>
+  <div class="calendar__grid">
+    @for (offsetDays of offsetFirstDay; track $index) {
+    <div class="calendar__offsetCell"></div>
+    } @for (day of calendarDays; track $index) {
+    <div
+      class="calendar__gradientWrapper"
+      [ngClass]="{ 'calendar__gradientWrapper--selected': isSelected(day) }"
+    >
+      <button
+        type="button"
+        class="calendar__dayButton"
+        (click)="selectDay(day)"
+        [disabled]="isFuture(day)"
+        [ngClass]="{ 'calendar__dayButton--disabled': isFuture(day) }"
+      >
+        {{ day.getDate() }}
+      </button>
     </div>
-    <div class="calendar__grid">
-        @for (offsetDays of offsetFirstDay; track $index) {
-            <div class="calendar__offsetCell"></div>
-        }
-        @for (day of calendarDays; track $index) {
-            <div class="calendar__gradientWrapper" [ngClass]="{ 'calendar__gradientWrapper--selected' : isSelected(day)}">
-                <button 
-                type="button" 
-                class="calendar__dayButton"
-                (click)="selectDay(day)"
-                [disabled]="isFuture(day)"
-                [ngClass]="{ 'calendar__dayButton--disabled' : isFuture(day)}">
-                    {{day.getDate()}}
-                </button>
-            </div>
-        }
-    </div>
+    }
+  </div>
 
-    <div class="calendar__selector">
-        <button class="calendar__selectorButton" (click)="changeMonth(-1)"><img width="22" height="21" src="../../../../assets/icons/arrow.png" alt=""></button>
-        <span class="calendar__monthLabel"> {{monthString  | uppercase }} {{yearString}}</span>
-        <button 
-            class="calendar__selectorButton--alt" 
-            (click)="changeMonth(+1)"
-            [disabled]="isLastMonth()"
-            [ngClass]="{ 'calendar__selectorButton--disabled' : isLastMonth()}"
-            >
-            <img width="22" height="21" src="../../../../assets/icons/arrow.png" alt="">
-        </button>
-    </div>
+  <div class="calendar__selector">
+    <button class="calendar__selectorButton" (click)="changeMonth(-1)">
+      <img width="22" height="21" src="../../../../assets/icons/arrow.png" alt="" />
+    </button>
+    <span class="calendar__monthLabel"> {{ monthString | uppercase }} {{ yearString }}</span>
+    <button
+      class="calendar__selectorButton--alt"
+      (click)="changeMonth(+1)"
+      [disabled]="isLastMonth()"
+      [ngClass]="{ 'calendar__selectorButton--disabled': isLastMonth() }"
+    >
+      <img width="22" height="21" src="../../../../assets/icons/arrow.png" alt="" />
+    </button>
+  </div>
 </div>

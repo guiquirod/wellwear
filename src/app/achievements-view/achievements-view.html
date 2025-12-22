@@ -10,15 +10,33 @@
     </div>
     <div class="achievements-view__message">
       <h2 class="achievements-view__message-name">¡Buenas {{ userName$ | async }}!</h2>
-      <p class="achievements-view__message-text">Completa los retos para aumentar tu nivel de consumo sostenible. Los retos cambiarán dependiendo de su periodicidad.</p>
+      <p class="achievements-view__message-text">
+        Completa los retos para aumentar tu nivel de consumo sostenible. Los retos cambiarán
+        dependiendo de su periodicidad.
+      </p>
     </div>
     <app-section-title [title]="'Retos'"></app-section-title>
+    <h3 class="achievements-view__section-title">Retos Automáticos</h3>
+    <div class="achievements-view__section">
+      <div class="achievements-view__list">
+        @for (achievement of automaticAchievements$ | async; track achievement.id) {
+        <app-achievement-row
+          [infoText]="achievement.title"
+          [points]="achievement.points"
+          [isCompleted]="achievement.completed"
+          [isAutomatic]="true"
+        >
+        </app-achievement-row>
+        }
+      </div>
+    </div>
     <h3 class="achievements-view__section-title">Retos Mensuales</h3>
     <div class="achievements-view__section">
       <div class="achievements-view__list">
         @for (achievement of monthlyAchievemenmts$ | async; track achievement.id) {
         <app-achievement-row
           [infoText]="achievement.title"
+          [points]="achievement.points"
           [isCompleted]="achievement.completed"
           (checkboxChange)="onAchievementComplete(achievement.id)"
         >
@@ -32,6 +50,7 @@
         @for (achievement of weeklyAchievements$ | async; track achievement.id) {
         <app-achievement-row
           [infoText]="achievement.title"
+          [points]="achievement.points"
           [isCompleted]="achievement.completed"
           (checkboxChange)="onAchievementComplete(achievement.id)"
         >
@@ -46,6 +65,7 @@
         @for (achievement of dailyAchievements$ | async; track achievement.id) {
         <app-achievement-row
           [infoText]="achievement.title"
+          [points]="achievement.points"
           [isCompleted]="achievement.completed"
           (checkboxChange)="onAchievementComplete(achievement.id)"
         >

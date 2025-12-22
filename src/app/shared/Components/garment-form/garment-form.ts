@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -8,13 +17,18 @@ import { ConfirmationModal, ConfirmationOption } from '../confirmation-modal/con
 import { FabricType, allFabricTypes } from '../../Enum/fabric-type';
 import { Season, allSeasons } from '../../Enum/season';
 import { GarmentLenght, allLenghts } from '../../Enum/garment-lenght';
-import { GarmentType, GarmentSection, topGarments, bottomGarments, garmentIcon } from '../../Enum/garment-type';
+import {
+  GarmentType,
+  GarmentSection,
+  topGarments,
+  bottomGarments,
+  garmentIcon,
+} from '../../Enum/garment-type';
 import { GarmentDTO } from '../../Models/garment.dto';
-import { Button } from "../button/button";
+import { Button } from '../button/button';
 import { DropdownButton } from '../dropdown-button/dropdown-button';
 import { ColorPicker } from '../color-picker/color-picker';
 import { SharedService } from '../../Services/shared.service';
-import { GarmentService } from '../../Services/garment.service';
 import { GarmentActions } from '../../Store/garment/garment.actions';
 import { ImageUrlPipe } from '../../Pipes/image-url.pipe';
 
@@ -25,9 +39,18 @@ export interface GarmentFormData {
 
 @Component({
   selector: 'app-garment-form',
-  imports: [CommonModule, ColorPicker, ModalSelector, ConfirmationModal, ReactiveFormsModule, Button, DropdownButton, ImageUrlPipe],
+  imports: [
+    CommonModule,
+    ColorPicker,
+    ModalSelector,
+    ConfirmationModal,
+    ReactiveFormsModule,
+    Button,
+    DropdownButton,
+    ImageUrlPipe,
+  ],
   templateUrl: './garment-form.html',
-  styleUrl: './garment-form.scss'
+  styleUrl: './garment-form.scss',
 })
 export class GarmentForm implements OnInit, OnChanges {
   @Input() garment?: GarmentDTO;
@@ -39,20 +62,28 @@ export class GarmentForm implements OnInit, OnChanges {
 
   constructor(
     private sharedService: SharedService,
-    private garmentService: GarmentService,
     private store: Store,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
-   form = new FormGroup({
+  form = new FormGroup({
     type: new FormControl<GarmentType | null>(null, { validators: [Validators.required] }),
-    fabric: new FormControl<FabricType[]>([], { validators: [Validators.required], nonNullable: true }),
-    seasons: new FormControl<Season[]>([], { validators: [Validators.required], nonNullable: true }),
+    fabric: new FormControl<FabricType[]>([], {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    seasons: new FormControl<Season[]>([], {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
     sleeve: new FormControl<GarmentLenght | null>(null, { validators: [Validators.required] }),
-    mainColor: new FormControl<string>('#EAEAEA', { validators: [Validators.required], nonNullable: true }),
+    mainColor: new FormControl<string>('#000000', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
     pattern: new FormControl<boolean>(false, { nonNullable: true }),
     isSecondHand: new FormControl<boolean>(false, { nonNullable: true }),
-    picture: new FormControl<File | null>(null, { validators: [Validators.required] })
+    picture: new FormControl<File | null>(null, { validators: [Validators.required] }),
   });
 
   selectedFile: File | null = null;
@@ -74,12 +105,12 @@ export class GarmentForm implements OnInit, OnChanges {
 
   garmentModalSections: ModalSection<GarmentType>[] = [
     { title: 'Parte Superior', items: topGarments },
-    { title: 'Parte Inferior', items: bottomGarments }
+    { title: 'Parte Inferior', items: bottomGarments },
   ];
 
   garmentDisplay: ModalItemDisplay<GarmentType> = {
     getIcon: (type) => `assets/icons/garmentType_${garmentIcon(type)}.png`,
-    getLabel: (type) => type
+    getLabel: (type) => type,
   };
 
   showTypeModal = false;
@@ -88,12 +119,12 @@ export class GarmentForm implements OnInit, OnChanges {
   successModalOptions: ConfirmationOption[] = [
     {
       text: 'Añadir otra prenda',
-      action: () => this.handleAddAnother()
+      action: () => this.handleAddAnother(),
     },
     {
       text: 'Finalizar',
-      action: () => this.handleFinish()
-    }
+      action: () => this.handleFinish(),
+    },
   ];
 
   ngOnInit() {
@@ -120,7 +151,7 @@ export class GarmentForm implements OnInit, OnChanges {
       sleeve: garment.sleeve,
       mainColor: garment.mainColor,
       pattern: garment.pattern,
-      isSecondHand: garment.isSecondHand
+      isSecondHand: garment.isSecondHand,
     });
 
     this.selectedFabrics = garment.fabricType;
@@ -133,8 +164,12 @@ export class GarmentForm implements OnInit, OnChanges {
     this.form.controls.picture.updateValueAndValidity();
   }
 
-  openTypeModal() { this.showTypeModal = true; }
-  closeTypeModal() { this.showTypeModal = false; }
+  openTypeModal() {
+    this.showTypeModal = true;
+  }
+  closeTypeModal() {
+    this.showTypeModal = false;
+  }
 
   pickType(type: GarmentType) {
     this.form.controls.type.setValue(type);
@@ -224,7 +259,7 @@ export class GarmentForm implements OnInit, OnChanges {
     this.selectedFileName = this.shorterFileName(file.name);
 
     try {
-      const colors = await extractColors(file, { format: 'hex', maxColors: 1 }) as string[];
+      const colors = (await extractColors(file, { format: 'hex', maxColors: 1 })) as string[];
       if (colors.length > 0) {
         this.extractedColor = colors[0];
         this.form.controls.mainColor.setValue(colors[0]);
@@ -254,8 +289,8 @@ export class GarmentForm implements OnInit, OnChanges {
     return `${fileName.substring(0, maxNameLength)}...${extension}`;
   }
 
-  submit(){
-    if (this.form.invalid){
+  submit() {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       if (!this.selectedFile && !this.isEditMode) {
         this.sharedService.showToast('Por favor, selecciona una imagen');
@@ -293,12 +328,12 @@ export class GarmentForm implements OnInit, OnChanges {
       pattern: formValue.pattern,
       isSecondHand: formValue.isSecondHand,
       worn: 0,
-      outfited: 0
+      outfited: 0,
     };
 
     const formData: GarmentFormData = {
       garment: garmentData,
-      imageFile: this.selectedFile || undefined
+      imageFile: this.selectedFile || undefined,
     };
 
     if (this.isEditMode && this.garment) {
@@ -314,30 +349,27 @@ export class GarmentForm implements OnInit, OnChanges {
       return;
     }
 
-    this.garmentService.createGarment(formData.garment, formData.imageFile).subscribe({
-      next: () => {
-        this.store.dispatch(GarmentActions.loadGarments());
-        this.resetForm();
-        this.showSuccessModal = true;
-      },
-      error: (error) => {
-        this.sharedService.showToast(error.error?.message ?? '');
-      }
-    });
+    this.store.dispatch(
+      GarmentActions.createGarment({
+        garment: formData.garment,
+        imageFile: formData.imageFile,
+      })
+    );
+    this.resetForm();
+    this.showSuccessModal = true;
   }
 
   updateGarment(id: string, formData: GarmentFormData) {
-    this.garmentService.updateGarment(id, formData.garment, formData.imageFile).subscribe({
-      next: () => {
-        this.store.dispatch(GarmentActions.loadGarments());
-        this.sharedService.showToast('¡Prenda actualizada!', true);
-        this.resetForm();
-        this.close.emit();
-      },
-      error: (error) => {
-        this.sharedService.showToast(error.error?.message ?? '');
-      }
-    });
+    this.store.dispatch(
+      GarmentActions.updateGarment({
+        id,
+        garment: formData.garment,
+        imageFile: formData.imageFile,
+      })
+    );
+    this.sharedService.showToast('¡Prenda actualizada!', true);
+    this.resetForm();
+    this.close.emit();
   }
 
   handleAddAnother() {
@@ -361,10 +393,10 @@ export class GarmentForm implements OnInit, OnChanges {
       fabric: [],
       seasons: [],
       sleeve: null,
-      mainColor: '#EAEAEA',
+      mainColor: '#000000',
       pattern: false,
       isSecondHand: false,
-      picture: null
+      picture: null,
     });
     this.selectedFile = null;
     this.imagePreview = null;

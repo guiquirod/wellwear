@@ -8,6 +8,7 @@ export const AchievementActions = createActionGroup({
     'Load User Level': emptyProps(),
     'Load Achievements': emptyProps(),
     'Complete Achievement': props<{ achievementId: number }>(),
+    'Check Automatic Achievements': emptyProps(),
   },
 });
 
@@ -20,5 +21,7 @@ export const AchievementApiActions = createActionGroup({
     'Load Achievements Failure': props<{ error: string }>(),
     'Complete Achievement Success': props<{ userAchievement: UserLevelDTO }>(),
     'Complete Achievement Failure': props<{ error: string }>(),
+    'Check Automatic Achievements Success': props<{ completedAchievements: number[] }>(),
+    'Check Automatic Achievements Failure': props<{ error: string }>(),
   },
 });

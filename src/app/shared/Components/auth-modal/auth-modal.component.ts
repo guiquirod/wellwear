@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { AuthActions } from '../../Store/auth/auth.actions';
@@ -11,7 +17,7 @@ import { AuthDTO } from '../../Models/auth.dto';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './auth-modal.component.html',
-  styleUrls: ['./auth-modal.component.scss']
+  styleUrls: ['./auth-modal.component.scss'],
 })
 export class AuthModalComponent implements OnInit {
   @Input() open = false;
@@ -30,30 +36,27 @@ export class AuthModalComponent implements OnInit {
   @Output() closeModal = new EventEmitter<void>();
   @Output() authSuccess = new EventEmitter<void>();
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private store: Store<AppState>
-  ) {
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {
     this.loginEmail = new FormControl('', [
       Validators.required,
-      Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')
+      Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
     ]);
-      
+
     this.registerEmail = new FormControl('', [
       Validators.required,
-      Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')
+      Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
     ]);
 
     this.loginPassword = new FormControl('', [
       Validators.required,
       Validators.minLength(6),
-      Validators.maxLength(16)
+      Validators.maxLength(16),
     ]);
-        
+
     this.registerPassword = new FormControl('', [
       Validators.required,
       Validators.minLength(6),
-      Validators.maxLength(16)
+      Validators.maxLength(16),
     ]);
 
     this.name = new FormControl('', [
@@ -64,18 +67,19 @@ export class AuthModalComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       email: this.loginEmail,
-      password: this.loginPassword
+      password: this.loginPassword,
     });
 
     this.registerForm = this.formBuilder.group({
       name: this.name,
       email: this.registerEmail,
-      password: this.registerPassword
+      password: this.registerPassword,
     });
   }
 
   ngOnInit(): void {
-    this.store.select(state => state.auth.isAuthenticated)
+    this.store
+      .select((state) => state.auth.isAuthenticated)
       .subscribe((isAuthenticated) => {
         if (isAuthenticated) {
           this.authSuccess.emit();
@@ -93,7 +97,7 @@ export class AuthModalComponent implements OnInit {
   login(): void {
     const credentials: AuthDTO = {
       email: this.loginEmail.value,
-      password: this.loginPassword.value
+      password: this.loginPassword.value,
     };
 
     this.store.dispatch(AuthActions.login({ credentials }));
@@ -103,7 +107,7 @@ export class AuthModalComponent implements OnInit {
     const credentials: AuthDTO = {
       name: this.name.value,
       email: this.registerEmail.value,
-      password: this.registerPassword.value
+      password: this.registerPassword.value,
     };
 
     this.store.dispatch(AuthActions.register({ credentials }));

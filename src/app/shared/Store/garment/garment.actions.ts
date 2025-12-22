@@ -6,7 +6,7 @@ export const GarmentActions = createActionGroup({
   events: {
     'Load Garments': emptyProps(),
     'Create Garment': props<{ garment: Omit<GarmentDTO, 'id' | 'picture'>; imageFile: File }>(),
-    'Update Garment': props<{ garment: GarmentDTO }>(),
+    'Update Garment': props<{ id: string; garment: Omit<GarmentDTO, 'id' | 'picture'>; imageFile?: File }>(),
     'Delete Garment': props<{ id: string }>(),
   },
 });

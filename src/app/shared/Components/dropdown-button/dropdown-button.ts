@@ -27,7 +27,7 @@ export class DropdownButton<T extends string = string> {
       this.isOpen = false;
     } else {
       this.selectedOptions = this.isSelected(option)
-        ? this.selectedOptions.filter(selectedOption => selectedOption !== option)
+        ? this.selectedOptions.filter((selectedOption) => selectedOption !== option)
         : [...this.selectedOptions, option];
     }
     this.selectionChange.emit(this.selectedOptions);

@@ -17,9 +17,11 @@ export class AchievementEffects {
       ofType(AchievementActions.loadUserLevel),
       exhaustMap(() =>
         this.achievementService.getUserAchievement().pipe(
-          map((response) => AchievementApiActions.loadUserLevelSuccess({ userAchievement: response.data! })),
+          map((response) =>
+            AchievementApiActions.loadUserLevelSuccess({ userAchievement: response.data! })
+          ),
           catchError((error) =>
-            of(AchievementApiActions.loadUserLevelFailure({ error: error.message }))
+            of(AchievementApiActions.loadUserLevelFailure({ error: error.error?.message }))
           )
         )
       )
@@ -42,9 +44,11 @@ export class AchievementEffects {
       ofType(AchievementActions.loadAchievements),
       exhaustMap(() =>
         this.achievementService.getAchievements().pipe(
-          map((response) => AchievementApiActions.loadAchievementsSuccess({ achievements: response.data! })),
+          map((response) =>
+            AchievementApiActions.loadAchievementsSuccess({ achievements: response.data! })
+          ),
           catchError((error) =>
-            of(AchievementApiActions.loadAchievementsFailure({ error: error.message }))
+            of(AchievementApiActions.loadAchievementsFailure({ error: error.error?.message }))
           )
         )
       )
@@ -68,10 +72,12 @@ export class AchievementEffects {
       exhaustMap(({ achievementId }) =>
         this.achievementService.completeAchievement(achievementId).pipe(
           map((response) => {
-            return AchievementApiActions.completeAchievementSuccess({ userAchievement: response.data! });
+            return AchievementApiActions.completeAchievementSuccess({
+              userAchievement: response.data!,
+            });
           }),
           catchError((error) =>
-            of(AchievementApiActions.completeAchievementFailure({ error: error.message }))
+            of(AchievementApiActions.completeAchievementFailure({ error: error.error?.message }))
           )
         )
       )
@@ -89,6 +95,46 @@ export class AchievementEffects {
     () =>
       this.actions$.pipe(
         ofType(AchievementApiActions.completeAchievementFailure),
+        tap(({ error }) => {
+          this.sharedService.showToast(error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  checkAutomaticAchievements$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AchievementActions.checkAutomaticAchievements),
+      exhaustMap(() =>
+        this.achievementService.checkAutomaticAchievements().pipe(
+          map((response) =>
+            AchievementApiActions.checkAutomaticAchievementsSuccess({
+              completedAchievements: response.data!.completedAchievements,
+            })
+          ),
+          catchError((error) =>
+            of(
+              AchievementApiActions.checkAutomaticAchievementsFailure({
+                error: error.error?.message,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  checkAutomaticAchievementsSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AchievementApiActions.checkAutomaticAchievementsSuccess),
+      map(() => AchievementActions.loadAchievements())
+    )
+  );
+
+  checkAutomaticAchievementsFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AchievementApiActions.checkAutomaticAchievementsFailure),
         tap(({ error }) => {
           this.sharedService.showToast(error);
         })

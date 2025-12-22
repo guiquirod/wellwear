@@ -5,7 +5,7 @@
 \*------------------------------------*/
 
 .context-header {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   display: flex;
   flex-flow: row nowrap;
@@ -13,16 +13,16 @@
   padding: 20px;
   justify-content: space-between;
 
-   &__row {
+  &__row {
     display: flex;
     flex-flow: column nowrap;
     gap: 3rem;
-   }
+  }
 
-   &__season {
+  &__season {
     font-size: 24px;
     justify-content: flex-start;
-   }
+  }
 
   &__date {
     font-size: 48px;
@@ -40,7 +40,7 @@
     animation: blink 1.5s ease-in-out infinite;
   }
 
-    &__corner--alt {
+  &__corner--alt {
     position: absolute;
     z-index: 1;
     border-right: 2px $color-primary-text solid;

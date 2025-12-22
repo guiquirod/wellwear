@@ -8,7 +8,13 @@ import { UserLevelDTO } from '../shared/Models/user-level.dto';
 import { AchievementDTO } from '../shared/Models/achievement.dto';
 import { GenericToast } from '../shared/Components/generic-toast/generic-toast';
 import { AchievementActions } from '../shared/Store/achievement/achievement.actions';
-import { selectDailyAchievements, selectWeeklyAchievements, selectMonthlyAchievements, selectUserLevel } from '../shared/Store/achievement/achievement.selectors';
+import {
+  selectDailyAchievements,
+  selectWeeklyAchievements,
+  selectMonthlyAchievements,
+  selectAutomaticAchievements,
+  selectUserLevel,
+} from '../shared/Store/achievement/achievement.selectors';
 
 @Component({
   selector: 'app-achievements-view',
@@ -21,6 +27,7 @@ export class AchievementsView implements OnInit {
   dailyAchievements$: Observable<AchievementDTO[]>;
   weeklyAchievements$: Observable<AchievementDTO[]>;
   monthlyAchievemenmts$: Observable<AchievementDTO[]>;
+  automaticAchievements$: Observable<AchievementDTO[]>;
   userName$: Observable<string | null>;
 
   constructor(private store: Store<{ auth: { name: string | null } }>) {
@@ -28,7 +35,8 @@ export class AchievementsView implements OnInit {
     this.dailyAchievements$ = this.store.select(selectDailyAchievements);
     this.weeklyAchievements$ = this.store.select(selectWeeklyAchievements);
     this.monthlyAchievemenmts$ = this.store.select(selectMonthlyAchievements);
-    this.userName$ = this.store.select(state => state.auth.name);
+    this.automaticAchievements$ = this.store.select(selectAutomaticAchievements);
+    this.userName$ = this.store.select((state) => state.auth.name);
   }
 
   ngOnInit() {

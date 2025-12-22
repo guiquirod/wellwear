@@ -42,10 +42,10 @@
       Retos
     </ul>
     <ul
-      class="header-nav__mobile-option header-nav__mobile-option--logout"
-      (click)="openLogoutModal(); closeMobileMenu()"
+      class="header-nav__mobile-option"
+      (click)="openProfileModal(); closeMobileMenu()"
     >
-      Logout
+      Perfil
     </ul>
   </nav>
 
@@ -78,17 +78,26 @@
     >
       Retos
     </ul>
-    <ul class="header-nav__option header-nav__option--logout" (click)="openLogoutModal()">
+    <ul class="header-nav__option header-nav__option--logout" (click)="openProfileModal()">
       <img src="assets/icons/house-icon.png" alt="Logout" class="header-nav__logout-icon" />
     </ul>
   </nav>
 </header>
 
 <app-confirmation-modal
-  [open]="showLogoutModal"
-  [title]="'Cerrar Sesión'"
-  [message]="'¿Estás seguro de que deseas cerrar sesión?'"
-  [options]="logoutOptions"
-  (close)="closeLogoutModal()"
+  [open]="showMenuModal"
+  [title]="'Opciones del perfil'"
+  [message]="'¿Qué deseas hacer?'"
+  [options]="profileOptions"
+  (close)="closeProfileModal()"
+>
+</app-confirmation-modal>
+
+<app-confirmation-modal
+  [open]="showDeleteModal"
+  [title]="'Borrar usuario'"
+  [message]="'¿Deseas borrar tu cuenta definitivamente?'"
+  [options]="deleteOptions"
+  (close)="closeDeleteModal()"
 >
 </app-confirmation-modal>

@@ -74,10 +74,6 @@
     color: $color-secondary-text;
   }
 
-  &__mobile-option--logout {
-    color: $color-error;
-  }
-
   &__container {
     display: none;
     grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;

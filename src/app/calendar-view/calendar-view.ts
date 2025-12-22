@@ -23,15 +23,12 @@ export class CalendarView implements OnInit {
   selectedDateOutfits$!: Observable<OutfitWithGarments[]>;
   garments: GarmentDTO[] = [];
 
-  constructor(
-    private store: Store,
-    private outfitService: OutfitService
-  ) {}
+  constructor(private store: Store, private outfitService: OutfitService) {}
 
   ngOnInit() {
     this.store.dispatch(GarmentActions.loadGarments());
 
-    this.store.select(selectAllGarments).subscribe(garments => {
+    this.store.select(selectAllGarments).subscribe((garments) => {
       this.garments = garments;
       this.loadOutfitsForDate(new Date());
     });
@@ -42,9 +39,9 @@ export class CalendarView implements OnInit {
   }
 
   private loadOutfitsForDate(date: Date) {
-    this.selectedDateOutfits$ = this.outfitService.getOutfits(this.formatDate(date)).pipe(
-      map(response => response.data ?? [])
-    );
+    this.selectedDateOutfits$ = this.outfitService
+      .getOutfits(this.formatDate(date))
+      .pipe(map((response) => response.data ?? []));
   }
 
   private formatDate(date: Date): string {

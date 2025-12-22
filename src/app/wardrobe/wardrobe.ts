@@ -6,7 +6,10 @@ import { ProductContainer } from '../shared/Components/product-container/product
 import { ProductImage } from '../shared/Components/product-image/product-image';
 import { SectionTitle } from '../shared/Components/section-title/section-title';
 import { Button } from '../shared/Components/button/button';
-import { ConfirmationModal, ConfirmationOption } from '../shared/Components/confirmation-modal/confirmation-modal';
+import {
+  ConfirmationModal,
+  ConfirmationOption,
+} from '../shared/Components/confirmation-modal/confirmation-modal';
 import { OutfitForm } from '../shared/Components/outfit-form/outfit-form';
 import { GarmentForm } from '../shared/Components/garment-form/garment-form';
 import { GarmentDTO } from '../shared/Models/garment.dto';
@@ -26,7 +29,17 @@ export interface GarmentsByType {
 
 @Component({
   selector: 'app-wardrobe',
-  imports: [CommonModule, ProductContainer, ProductImage, SectionTitle, Button, GenericToast, ConfirmationModal, OutfitForm, GarmentForm],
+  imports: [
+    CommonModule,
+    ProductContainer,
+    ProductImage,
+    SectionTitle,
+    Button,
+    GenericToast,
+    ConfirmationModal,
+    OutfitForm,
+    GarmentForm,
+  ],
   templateUrl: './wardrobe.html',
   styleUrl: './wardrobe.scss',
 })
@@ -45,47 +58,43 @@ export class Wardrobe implements OnInit {
   outfitConfirmationOptions: ConfirmationOption[] = [
     {
       text: 'Actualizar',
-      action: () => this.handleOutfitUpdate()
+      action: () => this.handleOutfitUpdate(),
     },
     {
       text: 'Eliminar',
-      action: () => this.handleOutfitDelete()
-    }
+      action: () => this.handleOutfitDelete(),
+    },
   ];
 
   garmentConfirmationOptions: ConfirmationOption[] = [
     {
       text: 'Actualizar',
-      action: () => this.handleGarmentUpdate()
+      action: () => this.handleGarmentUpdate(),
     },
     {
       text: 'Eliminar',
-      action: () => this.handleGarmentDelete()
-    }
+      action: () => this.handleGarmentDelete(),
+    },
   ];
 
-  constructor(
-    private store: Store
-  ) {
+  constructor(private store: Store) {
     this.garments$ = this.store.select(selectAllGarments);
     this.outfits$ = this.store.select(selectAllOutfits);
 
     this.garmentsByType$ = this.garments$.pipe(
-      map(garments => {
-        const groupedMap = new Map<GarmentType, GarmentDTO[]>();
-
-        garments.forEach(garment => {
-          const existing = groupedMap.get(garment.type) || [];
-          groupedMap.set(garment.type, [...existing, garment]);
-        });
-
-        return Array.from(groupedMap.entries())
-          .map(([type, garments]) => ({
-            type,
-            typeName: this.getPluralTypeName(type),
-            garments
-          }));
-      })
+      map((garments) =>
+        Object.values(
+          garments.reduce((accumulator, garment) => {
+            accumulator[garment.type] ??= {
+              type: garment.type,
+              typeName: this.getPluralTypeName(garment.type),
+              garments: [],
+            };
+            accumulator[garment.type].garments.push(garment);
+            return accumulator;
+          }, {} as Record<GarmentType, GarmentsByType>)
+        )
+      )
     );
   }
 
@@ -189,7 +198,7 @@ export class Wardrobe implements OnInit {
       [GarmentType.Zapatos]: 'Zapatos',
       [GarmentType.Botines]: 'Botines',
       [GarmentType.Sandalias]: 'Sandalias',
-      [GarmentType.Botas]: 'Botas'
+      [GarmentType.Botas]: 'Botas',
     };
     return plurals[type] || type;
   }

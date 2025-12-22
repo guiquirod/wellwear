@@ -1,16 +1,14 @@
 <div class="picture-image">
   <img
     class="picture-image__main"
-    [ngClass]="{'picture-image__main--clickable': clickable}"
+    [ngClass]="{ 'picture-image__main--clickable': clickable }"
     [ngSrc]="imageSrc | imageUrl"
     width="150"
     height="150"
     [alt]="alt"
-    (click)="onClick()">
+    (click)="onClick()"
+  />
   @if (isSecondHand) {
-    <img
-      class="picture-image__badge"
-      src="assets/icons/second-hand.png"
-      alt="Segunda mano">
+  <img class="picture-image__badge" src="assets/icons/second-hand.png" alt="Segunda mano" />
   }
 </div>

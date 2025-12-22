@@ -8,8 +8,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './achievement-row.scss',
 })
 export class AchievementRow {
-  @Input() infoText = ''
+  @Input() infoText = '';
+  @Input() points = 25;
   @Input() isCompleted = false;
+  @Input() isAutomatic = false;
   @Output() checkboxChange = new EventEmitter<boolean>();
 
   onCheckboxChange(event: Event): void {
