@@ -124,16 +124,25 @@ export class OutfitForm implements OnInit, OnChanges {
   }
 
   isLeastUsed(garment: GarmentDTO): boolean {
-    if (this.allGarments.length === 0) return false;
     const avgOutfited =
       this.allGarments.reduce((sum, g) => sum + g.outfited, 0) / this.allGarments.length;
     return garment.outfited < avgOutfited;
   }
 
   saveOutfit() {
+    const hasTop = this.selectedGarments.some((g) => g.supType === GarmentSection.Top);
+    const hasBottom = this.selectedGarments.some((g) => g.supType === GarmentSection.Bottom);
+
     if (this.selectedGarments.length === 0) {
       this.sharedService.showToast(
         'Por favor, selecciona al menos una prenda para crear un conjunto'
+      );
+      return;
+    }
+
+    if (!hasTop || !hasBottom) {
+      this.sharedService.showToast(
+        'Por favor, selecciona al menos una prenda superior y otra inferior'
       );
       return;
     }
