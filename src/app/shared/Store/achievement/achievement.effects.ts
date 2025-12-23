@@ -16,9 +16,9 @@ export class AchievementEffects {
     this.actions$.pipe(
       ofType(AchievementActions.loadUserLevel),
       exhaustMap(() =>
-        this.achievementService.getUserAchievement().pipe(
+        this.achievementService.getUserLevel().pipe(
           map((response) =>
-            AchievementApiActions.loadUserLevelSuccess({ userAchievement: response.data! })
+            AchievementApiActions.loadUserLevelSuccess({ userLevel: response.data! })
           ),
           catchError((error) =>
             of(AchievementApiActions.loadUserLevelFailure({ error: error.error?.message }))
@@ -73,7 +73,7 @@ export class AchievementEffects {
         this.achievementService.completeAchievement(achievementId).pipe(
           map((response) => {
             return AchievementApiActions.completeAchievementSuccess({
-              userAchievement: response.data!,
+              userLevel: response.data!,
             });
           }),
           catchError((error) =>

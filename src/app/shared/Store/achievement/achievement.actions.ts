@@ -15,11 +15,11 @@ export const AchievementActions = createActionGroup({
 export const AchievementApiActions = createActionGroup({
   source: 'Achievement API',
   events: {
-    'Load User Level Success': props<{ userAchievement: UserLevelDTO }>(),
+    'Load User Level Success': props<{ userLevel: UserLevelDTO }>(),
     'Load User Level Failure': props<{ error: string }>(),
     'Load Achievements Success': props<{ achievements: AchievementDTO[] }>(),
     'Load Achievements Failure': props<{ error: string }>(),
-    'Complete Achievement Success': props<{ userAchievement: UserLevelDTO }>(),
+    'Complete Achievement Success': props<{ userLevel: UserLevelDTO }>(),
     'Complete Achievement Failure': props<{ error: string }>(),
     'Check Automatic Achievements Success': props<{ completedAchievements: number[] }>(),
     'Check Automatic Achievements Failure': props<{ error: string }>(),

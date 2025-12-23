@@ -26,9 +26,9 @@ const _achievementReducer = createReducer(
     error: null,
   })),
 
-  on(AchievementApiActions.loadUserLevelSuccess, (state, { userAchievement }) => ({
+  on(AchievementApiActions.loadUserLevelSuccess, (state, { userLevel }) => ({
     ...state,
-    userLevel: userAchievement,
+    userLevel: userLevel,
     loading: false,
     error: null,
   })),
@@ -64,9 +64,9 @@ const _achievementReducer = createReducer(
     error: null,
   })),
 
-  on(AchievementApiActions.completeAchievementSuccess, (state, { userAchievement }) => ({
+  on(AchievementApiActions.completeAchievementSuccess, (state, { userLevel }) => ({
     ...state,
-    userLevel: userAchievement,
+    userLevel: userLevel,
     loading: false,
     error: null,
   })),

@@ -19,9 +19,9 @@ export class AchievementService {
     this.urlWellwearApi = 'http://localhost/' + this.controller;
   }
 
-  getUserAchievement(): Observable<ApiResponse<UserLevelDTO>> {
+  getUserLevel(): Observable<ApiResponse<UserLevelDTO>> {
     return this.http
-      .get<ApiResponse<UserLevelDTO>>(`${this.urlWellwearApi}/get-user-achievement.php`, {
+      .get<ApiResponse<UserLevelDTO>>(`${this.urlWellwearApi}/get-user-level.php`, {
         withCredentials: true,
       })
       .pipe(catchError(this.sharedService.handleError));
