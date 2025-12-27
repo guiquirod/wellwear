@@ -1,20 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { OutfitActions, OutfitApiActions } from './outfit.actions';
 import { GarmentApiActions } from '../garment/garment.actions';
 import { AchievementActions } from '../achievement/achievement.actions';
 import { OutfitService } from '../../Services/outfit.service';
 import { SharedService } from '../../Services/shared.service';
-import { selectAllGarments } from '../garment/garment.selectors';
-import { OutfitDTO } from '../../Models/outfit.dto';
 
 @Injectable()
 export class OutfitEffects {
   private actions$ = inject(Actions);
-  private store = inject(Store);
   private outfitService = inject(OutfitService);
   private sharedService = inject(SharedService);
 
@@ -74,21 +70,9 @@ export class OutfitEffects {
   createOutfit$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitActions.createOutfit),
-      withLatestFrom(this.store.select(selectAllGarments)),
-      exhaustMap(([{ garmentIds }, allGarments]) =>
+      exhaustMap(({ garmentIds }) =>
         this.outfitService.createOutfit(garmentIds).pipe(
-          map((response) => {
-            const data = response.data as OutfitDTO;
-            const garments = garmentIds.flatMap((id) => {
-              const garment = allGarments.find((garment) => garment.id === id);
-              return garment ? [garment] : [];
-            });
-            const outfit = {
-              id: data.id,
-              garments,
-            };
-            return OutfitApiActions.createOutfitSuccess({ outfit });
-          }),
+          map(() => OutfitApiActions.createOutfitSuccess()),
           catchError((error) =>
             of(OutfitApiActions.createOutfitFailure({ error: error.error?.message }))
           )
@@ -97,15 +81,14 @@ export class OutfitEffects {
     )
   );
 
-  createOutfitSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(OutfitApiActions.createOutfitSuccess),
-        tap(() => {
-          this.sharedService.showToast('¡Conjunto creado!', true);
-        })
-      ),
-    { dispatch: false }
+  createOutfitSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(OutfitApiActions.createOutfitSuccess),
+      tap(() => {
+        this.sharedService.showToast('¡Conjunto creado!', true);
+      }),
+      map(() => OutfitActions.loadOutfits())
+    )
   );
 
   createOutfitFailure$ = createEffect(
@@ -122,21 +105,9 @@ export class OutfitEffects {
   updateOutfit$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitActions.updateOutfit),
-      withLatestFrom(this.store.select(selectAllGarments)),
-      exhaustMap(([{ id, garmentIds }, allGarments]) =>
+      exhaustMap(({ id, garmentIds }) =>
         this.outfitService.updateOutfit(id, garmentIds).pipe(
-          map((response) => {
-            const data = response.data as OutfitDTO;
-            const garments = garmentIds.flatMap((id) => {
-              const garment = allGarments.find((garment) => garment.id === id);
-              return garment ? [garment] : [];
-            });
-            const outfit = {
-              id: data.id,
-              garments,
-            };
-            return OutfitApiActions.updateOutfitSuccess({ outfit });
-          }),
+          map(() => OutfitApiActions.updateOutfitSuccess()),
           catchError((error) =>
             of(OutfitApiActions.updateOutfitFailure({ error: error.error?.message }))
           )
@@ -145,15 +116,14 @@ export class OutfitEffects {
     )
   );
 
-  updateOutfitSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(OutfitApiActions.updateOutfitSuccess),
-        tap(() => {
-          this.sharedService.showToast('¡Conjunto actualizado!', true);
-        })
-      ),
-    { dispatch: false }
+  updateOutfitSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(OutfitApiActions.updateOutfitSuccess),
+      tap(() => {
+        this.sharedService.showToast('¡Conjunto actualizado!', true);
+      }),
+      map(() => OutfitActions.loadOutfits())
+    )
   );
 
   updateOutfitFailure$ = createEffect(

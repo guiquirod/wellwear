@@ -63,9 +63,8 @@ const _outfitReducer = createReducer(
     error: null,
   })),
 
-  on(OutfitApiActions.createOutfitSuccess, (state, { outfit }) => ({
+  on(OutfitApiActions.createOutfitSuccess, (state) => ({
     ...state,
-    outfits: [...state.outfits, outfit],
     loading: false,
     error: null,
   })),
@@ -82,9 +81,8 @@ const _outfitReducer = createReducer(
     error: null,
   })),
 
-  on(OutfitApiActions.updateOutfitSuccess, (state, { outfit }) => ({
+  on(OutfitApiActions.updateOutfitSuccess, (state) => ({
     ...state,
-    outfits: state.outfits.map((o) => (o.id === outfit.id ? outfit : o)),
     loading: false,
     error: null,
   })),
