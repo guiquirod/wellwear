@@ -42,9 +42,9 @@ export class OutfitEffects {
   loadTodayOutfits$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitActions.loadTodayOutfits),
-      exhaustMap(() => {
-        const today = new Date().toISOString().split('T')[0];
-        return this.outfitService.getOutfits(today).pipe(
+      exhaustMap(({ date }) => {
+        const queryDate = date ?? new Date().toISOString().split('T')[0];
+        return this.outfitService.getOutfits(queryDate).pipe(
           map((response) =>
             OutfitApiActions.loadTodayOutfitsSuccess({ todayOutfits: response.data! })
           ),
@@ -185,7 +185,7 @@ export class OutfitEffects {
   wearOutfitSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitApiActions.wearOutfitSuccess),
-      map(() => OutfitActions.loadTodayOutfits())
+      map(() => OutfitActions.loadTodayOutfits({}))
     )
   );
 

@@ -5,7 +5,7 @@ export const OutfitActions = createActionGroup({
   source: 'Outfit',
   events: {
     'Load Outfits': emptyProps(),
-    'Load Today Outfits': emptyProps(),
+    'Load Today Outfits': props<{ date?: string }>(),
     'Create Outfit': props<{ garmentIds: string[] }>(),
     'Update Outfit': props<{ id: string; garmentIds: string[] }>(),
     'Delete Outfit': props<{ id: string }>(),

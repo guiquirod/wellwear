@@ -156,7 +156,6 @@ export class OutfitForm implements OnInit, OnChanges {
           garmentIds,
         })
       );
-      this.sharedService.showToast('¡Conjunto actualizado!', true);
     } else {
       this.store.dispatch(OutfitActions.createOutfit({ garmentIds }));
     }

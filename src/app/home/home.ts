@@ -91,7 +91,7 @@ export class Home implements OnInit {
   ngOnInit() {
     this.store.dispatch(GarmentActions.loadGarments());
     this.store.dispatch(OutfitActions.loadOutfits());
-    this.store.dispatch(OutfitActions.loadTodayOutfits());
+    this.store.dispatch(OutfitActions.loadTodayOutfits({}));
     this.store.dispatch(AchievementActions.loadAchievements());
   }
 

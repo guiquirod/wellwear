@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Calendar } from '../shared/Components/calendar/calendar';
 import { SectionTitle } from '../shared/Components/section-title/section-title';
 import { ProductContainer } from '../shared/Components/product-container/product-container';
-import { OutfitService } from '../shared/Services/outfit.service';
-import { GarmentDTO } from '../shared/Models/garment.dto';
 import { OutfitWithGarments } from '../shared/Models/outfit-with-garments.dto';
-import { GarmentActions } from '../shared/Store/garment/garment.actions';
-import { selectAllGarments } from '../shared/Store/garment/garment.selectors';
+import { OutfitActions } from '../shared/Store/outfit/outfit.actions';
+import { selectTodayOutfits } from '../shared/Store/outfit/outfit.selectors';
 import { GenericToast } from '../shared/Components/generic-toast/generic-toast';
 
 @Component({
@@ -21,17 +18,12 @@ import { GenericToast } from '../shared/Components/generic-toast/generic-toast';
 })
 export class CalendarView implements OnInit {
   selectedDateOutfits$!: Observable<OutfitWithGarments[]>;
-  garments: GarmentDTO[] = [];
 
-  constructor(private store: Store, private outfitService: OutfitService) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
-    this.store.dispatch(GarmentActions.loadGarments());
-
-    this.store.select(selectAllGarments).subscribe((garments) => {
-      this.garments = garments;
-      this.loadOutfitsForDate(new Date());
-    });
+    this.selectedDateOutfits$ = this.store.select(selectTodayOutfits);
+    this.loadOutfitsForDate(new Date());
   }
 
   onDayChange(date: Date) {
@@ -39,9 +31,7 @@ export class CalendarView implements OnInit {
   }
 
   private loadOutfitsForDate(date: Date) {
-    this.selectedDateOutfits$ = this.outfitService
-      .getOutfits(this.formatDate(date))
-      .pipe(map((response) => response.data ?? []));
+    this.store.dispatch(OutfitActions.loadTodayOutfits({ date: this.formatDate(date) }));
   }
 
   private formatDate(date: Date): string {
