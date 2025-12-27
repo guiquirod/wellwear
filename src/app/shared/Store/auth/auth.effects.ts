@@ -16,7 +16,7 @@ export class AuthEffects {
 
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.login),
+      ofType(AuthActions.loginUser),
       exhaustMap(({ credentials }) =>
         this.authService.login(credentials).pipe(
           map((response) => AuthApiActions.loginSuccess({ user: response.data! })),
@@ -50,7 +50,7 @@ export class AuthEffects {
 
   register$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.register),
+      ofType(AuthActions.registerUser),
       exhaustMap(({ credentials }) =>
         this.authService.register(credentials).pipe(
           map((response) => AuthApiActions.registerSuccess({ user: response.data! })),
@@ -84,7 +84,7 @@ export class AuthEffects {
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.logout),
+      ofType(AuthActions.logoutUser),
       exhaustMap(() =>
         this.authService.logout().pipe(
           map(() => AuthApiActions.logoutSuccess()),

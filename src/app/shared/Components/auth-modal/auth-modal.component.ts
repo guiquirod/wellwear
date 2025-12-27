@@ -100,7 +100,7 @@ export class AuthModalComponent implements OnInit {
       password: this.loginPassword.value,
     };
 
-    this.store.dispatch(AuthActions.login({ credentials }));
+    this.store.dispatch(AuthActions.loginUser({ credentials }));
   }
 
   register(): void {
@@ -110,7 +110,7 @@ export class AuthModalComponent implements OnInit {
       password: this.registerPassword.value,
     };
 
-    this.store.dispatch(AuthActions.register({ credentials }));
+    this.store.dispatch(AuthActions.registerUser({ credentials }));
   }
 
   onClose(): void {

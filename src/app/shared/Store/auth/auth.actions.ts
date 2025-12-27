@@ -5,9 +5,9 @@ import { UserDTO } from '../../Models/user.dto';
 export const AuthActions = createActionGroup({
   source: 'Auth',
   events: {
-    Login: props<{ credentials: AuthDTO }>(),
-    Register: props<{ credentials: AuthDTO }>(),
-    Logout: emptyProps(),
+    'Login User': props<{ credentials: AuthDTO }>(),
+    'Register User': props<{ credentials: AuthDTO }>(),
+    'Logout User': emptyProps(),
     'Delete User': emptyProps(),
     'Load Auth From Storage': emptyProps(),
   },

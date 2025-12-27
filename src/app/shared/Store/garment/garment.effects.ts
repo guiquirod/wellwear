@@ -114,6 +114,17 @@ export class GarmentEffects {
     )
   );
 
+  updateGarmentSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(GarmentApiActions.updateGarmentSuccess),
+        tap(() => {
+          this.sharedService.showToast('¡Prenda actualizada!', true);
+        })
+      ),
+    { dispatch: false }
+  );
+
   updateGarmentFailure$ = createEffect(
     () =>
       this.actions$.pipe(

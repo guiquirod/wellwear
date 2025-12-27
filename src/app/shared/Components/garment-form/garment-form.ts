@@ -33,7 +33,7 @@ import { GarmentActions } from '../../Store/garment/garment.actions';
 import { ImageUrlPipe } from '../../Pipes/image-url.pipe';
 
 export interface GarmentFormData {
-  garment: Omit<GarmentDTO, 'id' | 'user_id' | 'picture'>;
+  garment: Omit<GarmentDTO, 'id' | 'picture'>;
   imageFile?: File;
 }
 
@@ -367,7 +367,6 @@ export class GarmentForm implements OnInit, OnChanges {
         imageFile: formData.imageFile,
       })
     );
-    this.sharedService.showToast('¡Prenda actualizada!', true);
     this.resetForm();
     this.close.emit();
   }

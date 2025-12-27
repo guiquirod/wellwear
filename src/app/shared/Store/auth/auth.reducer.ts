@@ -20,7 +20,7 @@ export const initialState: AuthState = {
 const _authReducer = createReducer(
   initialState,
 
-  on(AuthActions.login, (state) => ({
+  on(AuthActions.loginUser, (state) => ({
     ...state,
     loading: true,
     error: null,
@@ -42,7 +42,7 @@ const _authReducer = createReducer(
     isAuthenticated: false,
   })),
 
-  on(AuthActions.register, (state) => ({
+  on(AuthActions.registerUser, (state) => ({
     ...state,
     loading: true,
     error: null,
@@ -63,7 +63,7 @@ const _authReducer = createReducer(
     error,
   })),
 
-  on(AuthActions.logout, (state) => ({
+  on(AuthActions.logoutUser, (state) => ({
     ...state,
     loading: true,
   })),

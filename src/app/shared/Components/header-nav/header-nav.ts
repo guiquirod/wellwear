@@ -82,7 +82,7 @@ export class HeaderNav {
   }
 
   handleLogout() {
-    this.store.dispatch(AuthActions.logout());
+    this.store.dispatch(AuthActions.logoutUser());
     this.closeProfileModal();
   }
 
