@@ -38,20 +38,20 @@ const _outfitReducer = createReducer(
     error,
   })),
 
-  on(OutfitActions.loadTodayOutfits, (state) => ({
+  on(OutfitActions.loadOutfitsByDate, (state) => ({
     ...state,
     loading: true,
     error: null,
   })),
 
-  on(OutfitApiActions.loadTodayOutfitsSuccess, (state, { todayOutfits }) => ({
+  on(OutfitApiActions.loadOutfitsByDateSuccess, (state, { todayOutfits }) => ({
     ...state,
     todayOutfits,
     loading: false,
     error: null,
   })),
 
-  on(OutfitApiActions.loadTodayOutfitsFailure, (state, { error }) => ({
+  on(OutfitApiActions.loadOutfitsByDateFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,

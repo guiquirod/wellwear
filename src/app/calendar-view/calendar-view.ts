@@ -31,7 +31,7 @@ export class CalendarView implements OnInit {
   }
 
   private loadOutfitsForDate(date: Date) {
-    this.store.dispatch(OutfitActions.loadTodayOutfits({ date: this.formatDate(date) }));
+    this.store.dispatch(OutfitActions.loadOutfitsByDate({ date: this.formatDate(date) }));
   }
 
   private formatDate(date: Date): string {

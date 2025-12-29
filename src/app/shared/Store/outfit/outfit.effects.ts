@@ -39,27 +39,27 @@ export class OutfitEffects {
     { dispatch: false }
   );
 
-  loadTodayOutfits$ = createEffect(() =>
+  loadOutfitsByDate$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(OutfitActions.loadTodayOutfits),
+      ofType(OutfitActions.loadOutfitsByDate),
       exhaustMap(({ date }) => {
         const queryDate = date ?? new Date().toISOString().split('T')[0];
         return this.outfitService.getOutfits(queryDate).pipe(
           map((response) =>
-            OutfitApiActions.loadTodayOutfitsSuccess({ todayOutfits: response.data! })
+            OutfitApiActions.loadOutfitsByDateSuccess({ todayOutfits: response.data! })
           ),
           catchError((error) =>
-            of(OutfitApiActions.loadTodayOutfitsFailure({ error: error.error?.message }))
+            of(OutfitApiActions.loadOutfitsByDateFailure({ error: error.error?.message }))
           )
         );
       })
     )
   );
 
-  loadTodayOutfitsFailure$ = createEffect(
+  loadOutfitsByDateFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(OutfitApiActions.loadTodayOutfitsFailure),
+        ofType(OutfitApiActions.loadOutfitsByDateFailure),
         tap(({ error }) => {
           this.sharedService.showToast(error);
         })
@@ -185,7 +185,7 @@ export class OutfitEffects {
   wearOutfitSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitApiActions.wearOutfitSuccess),
-      map(() => OutfitActions.loadTodayOutfits({}))
+      map(() => OutfitActions.loadOutfitsByDate({}))
     )
   );
 
