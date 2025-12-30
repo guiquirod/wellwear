@@ -1,11 +1,10 @@
 import { Component, signal, OnInit } from '@angular/core';
-import { RouterOutlet, Router, NavigationStart } from '@angular/router';
+import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from './app.reducers';
 import { AuthActions } from './shared/Store/auth/auth.actions';
 import { HeaderNav } from './shared/Components/header-nav/header-nav';
 import { Footer } from './shared/Components/footer/footer';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +19,13 @@ export class App implements OnInit {
     private store: Store<AppState>,
     private router: Router
   ) {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationStart))
-      .subscribe((event) => {
-        if (event instanceof NavigationStart) {
-          this.showNavigation = event.url !== '/';
-        }
-      });
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && event.url === '/') {
+        this.showNavigation = false;
+      } else if (event instanceof NavigationEnd && event.url !== '/') {
+        this.showNavigation = true;
+      }
+    });
   }
 
   ngOnInit(): void {
