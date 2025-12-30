@@ -1,4 +1,4 @@
-<header class="header-nav">
+<header class="header-nav" [ngClass]="{ 'header-nav--logging-out': isLoggingOut }">
   <button class="header-nav__mobile-toggle" (click)="toggleMobileMenu()">
     Menu
     <img
@@ -79,7 +79,7 @@
       Retos
     </ul>
     <ul class="header-nav__option header-nav__option--logout" (click)="openProfileModal()">
-      <img src="assets/icons/house-icon.png" alt="Logout" class="header-nav__logout-icon" />
+      <img src="assets/icons/house-icon.png" alt="Perfil" class="header-nav__logout-icon" />
     </ul>
   </nav>
 </header>

@@ -11,7 +11,7 @@
   display: flex;
   padding: 2rem;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow-y: auto;
   z-index: 10;
 }
@@ -29,7 +29,6 @@
   flex-flow: column nowrap;
   gap: 1.5rem;
   padding: 2rem 1rem;
-  overflow-y: auto;
   animation: slideIn 0.3s ease-out;
   background: linear-gradient($color-gradient);
   max-width: 90vw;
@@ -51,8 +50,6 @@
     display: flex;
     flex-flow: column nowrap;
     gap: 1.5rem;
-    max-height: 60vh;
-    overflow-y: auto;
   }
 
   &__section-title {
@@ -130,8 +127,12 @@
 
   &__actions {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     gap: 1rem;
-    justify-content: center;
+    align-items: center;
+
+    @media (min-width: $maxMSDesktopWidth) {
+      flex-flow: row nowrap;
+    }
   }
 }

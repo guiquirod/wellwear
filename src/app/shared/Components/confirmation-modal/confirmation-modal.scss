@@ -28,13 +28,14 @@
   min-width: 400px;
   max-width: 500px;
   background: linear-gradient($color-gradient);
-  padding: 2rem;
+  padding: 2rem 0;
   animation: slideIn 0.3s ease-out;
 
   &__content {
     display: flex;
     flex-flow: column nowrap;
     gap: 1.5rem;
+    align-items: center;
   }
 
   &__title {

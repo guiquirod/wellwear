@@ -51,7 +51,12 @@
 
   &__buttons {
     display: flex;
+    flex-flow: column nowrap;
     gap: 1rem;
     margin-top: 1rem;
+
+    @media (min-width: $maxLMobileWidth) {
+      flex-flow: row nowrap;
+    }
   }
 }

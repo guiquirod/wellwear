@@ -10,9 +10,10 @@
   background: $color-secondary-grey;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow-y: auto;
   z-index: 7;
+  padding: 2rem;
 }
 
 
@@ -24,13 +25,17 @@
 \*------------------------------------*/
 
 .modal {
-  max-height: 90vh;
   background: linear-gradient($color-gradient);
-  overflow-y: auto;
   animation: slideIn 0.3s ease-out;
-  padding: 2rem;
-  margin: 2rem;
+  padding: 1rem;
+  margin: 1rem;
   box-sizing: border-box;
+
+  @media (min-width: $maxSMobileWidth) {
+    max-width: none;
+    padding: 2rem;
+    margin: 2rem;
+  }
 
   &__grid {
     display: flex;

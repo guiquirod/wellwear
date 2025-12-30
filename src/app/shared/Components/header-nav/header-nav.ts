@@ -17,6 +17,7 @@ export class HeaderNav {
   showMenuModal = false;
   showDeleteModal = false;
   mobileMenuOpen = false;
+  isLoggingOut = false;
 
   profileOptions: ConfirmationOption[] = [
     {
@@ -82,8 +83,11 @@ export class HeaderNav {
   }
 
   handleLogout() {
-    this.store.dispatch(AuthActions.logoutUser());
+    this.isLoggingOut = true;
     this.closeProfileModal();
+    setTimeout(() => {
+      this.store.dispatch(AuthActions.logoutUser());
+    }, 300);
   }
 
   handleDelete() {
@@ -106,7 +110,7 @@ export class HeaderNav {
   }
 
   navigateAndClose(route: string) {
-    this.navigate(route);
     this.closeMobileMenu();
+    setTimeout(() => this.navigate(route), 300);
   }
 }
