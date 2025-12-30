@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
-    this.urlWellwearApi = 'http://localhost/' + this.controller;
+    this.urlWellwearApi = 'https://wellwear.es/' + this.controller;
   }
 
   login(credentials: AuthDTO): Observable<ApiResponse<UserDTO>> {

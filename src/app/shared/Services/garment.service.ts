@@ -15,7 +15,7 @@ export class GarmentService {
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
-    this.urlWellwearApi = 'http://localhost/' + this.controller;
+    this.urlWellwearApi = 'https://wellwear.es/' + this.controller;
   }
 
   createGarment(

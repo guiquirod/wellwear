@@ -1,5 +1,5 @@
 import { Component, signal, OnInit } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { RouterOutlet, Router, NavigationStart } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from './app.reducers';
 import { AuthActions } from './shared/Store/auth/auth.actions';
@@ -21,9 +21,11 @@ export class App implements OnInit {
     private router: Router
   ) {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.showNavigation = this.router.url !== '/';
+      .pipe(filter(event => event instanceof NavigationStart))
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.showNavigation = event.url !== '/';
+        }
       });
   }
 

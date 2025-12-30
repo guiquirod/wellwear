@@ -6,6 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ImageUrlPipe implements PipeTransform {
   transform(path: string): string {
-    return path?.startsWith('http') ? path : `http://localhost/wellwear-api/${path}`;
+    return path?.startsWith('http') ? path : `https://wellwear.es/wellwear-api/${path}`;
   }
 }

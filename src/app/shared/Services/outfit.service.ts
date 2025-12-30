@@ -16,7 +16,7 @@ export class OutfitService {
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
-    this.urlWellwearApi = 'http://localhost/' + this.controller;
+    this.urlWellwearApi = 'https://wellwear.es/' + this.controller;
   }
 
   createOutfit(garmentIds: string[]): Observable<ApiResponse<OutfitDTO>> {

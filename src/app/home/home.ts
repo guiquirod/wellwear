@@ -129,6 +129,6 @@ export class Home implements OnInit {
   }
 
   private getImageUrl(path: string): string {
-    return path?.startsWith('http') ? path : `http://localhost/wellwear-api/${path}`;
+    return path?.startsWith('http') ? path : `https://wellwear.es/wellwear-api/${path}`;
   }
 }

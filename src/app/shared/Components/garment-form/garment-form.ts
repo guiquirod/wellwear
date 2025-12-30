@@ -11,7 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { extractColors } from '@ltcode/color-extractor';
+import { extractColors } from 'extract-colors';
 import { ModalSelector, ModalSection, ModalItemDisplay } from '../modal-selector/modal-selector';
 import { ConfirmationModal, ConfirmationOption } from '../confirmation-modal/confirmation-modal';
 import { FabricType, allFabricTypes } from '../../Enum/fabric-type';
@@ -258,23 +258,22 @@ export class GarmentForm implements OnInit, OnChanges {
     this.form.controls.picture.setValue(file);
     this.selectedFileName = this.shorterFileName(file.name);
 
-    try {
-      const colors = (await extractColors(file, { format: 'hex', maxColors: 1 })) as string[];
-      if (colors.length > 0) {
-        this.extractedColor = colors[0];
-        this.form.controls.mainColor.setValue(colors[0]);
-        this.changeDetectorRef.markForCheck();
-      }
-    } catch (error) {
-      console.log('No se pudo extraer el color', error);
-    }
-
     const reader = new FileReader();
-    reader.onloadend = (readerEvent: any) => {
-      setTimeout(() => {
-        this.imagePreview = readerEvent.target?.result as string;
-        this.changeDetectorRef.markForCheck();
-      }, 0);
+    reader.onloadend = async (readerEvent: any) => {
+      const dataUrl = readerEvent.target?.result as string;
+      this.imagePreview = dataUrl;
+      this.changeDetectorRef.markForCheck();
+
+      try {
+        const colors = await extractColors(dataUrl);
+        if (colors.length > 0) {
+          this.extractedColor = colors[0].hex;
+          this.form.controls.mainColor.setValue(colors[0].hex);
+          this.changeDetectorRef.markForCheck();
+        }
+      } catch (error) {
+        console.log('No se pudo extraer el color', error);
+      }
     };
     reader.readAsDataURL(file);
   }
