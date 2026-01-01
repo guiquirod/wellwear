@@ -10,7 +10,7 @@ export const OutfitActions = createActionGroup({
     'Update Outfit': props<{ id: string; garmentIds: string[] }>(),
     'Delete Outfit': props<{ id: string }>(),
     'Wear Outfit': props<{ id: string }>(),
-    'Unwear Outfit': props<{ id: string; date: string }>(),
+    'Unwear Outfit': props<{ id: string; date?: string }>(),
   },
 });
 

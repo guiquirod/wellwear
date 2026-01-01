@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+/*------------------------------------*\
+  #ERROR-VIEW
+\*------------------------------------*/
+
+.error-view {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1rem;
+  min-height: 800px;
+
+  &__message {
+    text-align: center;
+    font-size: 24px;
+  }
+}

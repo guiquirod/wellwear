@@ -1,5 +1,10 @@
 <div class="calendar-view">
   <app-generic-toast></app-generic-toast>
+  @if (loading$ | async) {
+  <app-spinner></app-spinner>
+  } @else if (error$ | async) {
+  <app-error-view></app-error-view>
+  } @else {
   <section class="calendar-view__wrapper">
     <app-section-title [title]="'Calendario'"></app-section-title>
     <app-calendar (dateChange)="onDayChange($event)"></app-calendar>
@@ -13,4 +18,5 @@
       }
     </div>
   </section>
+  }
 </div>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 import { SharedService } from './shared.service';
 import { GarmentDTO } from '../Models/garment.dto';
 import { ApiResponse } from '../Models/api-response.dto';
@@ -12,6 +12,7 @@ import { ApiResponse } from '../Models/api-response.dto';
 export class GarmentService {
   private urlWellwearApi: string;
   private controller: string;
+  private readonly timeout = 15000;
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
@@ -37,7 +38,7 @@ export class GarmentService {
       .post<ApiResponse<GarmentDTO>>(`${this.urlWellwearApi}/create-garment.php`, formData, {
         withCredentials: true,
       })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   getGarments(): Observable<ApiResponse<GarmentDTO[]>> {
@@ -45,7 +46,7 @@ export class GarmentService {
       .get<ApiResponse<GarmentDTO[]>>(`${this.urlWellwearApi}/get-garments.php`, {
         withCredentials: true,
       })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   updateGarment(
@@ -72,7 +73,7 @@ export class GarmentService {
         formData,
         { withCredentials: true }
       )
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   deleteGarment(id: string): Observable<ApiResponse> {
@@ -81,6 +82,6 @@ export class GarmentService {
         body: { garmentId: id },
         withCredentials: true,
       })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 }

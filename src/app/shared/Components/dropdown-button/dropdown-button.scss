@@ -9,7 +9,7 @@
   min-width: 300px;
   max-width: 380px;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   position: relative;
 
   &__button {

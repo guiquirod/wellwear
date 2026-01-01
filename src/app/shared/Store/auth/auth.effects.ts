@@ -161,7 +161,7 @@ export class AuthEffects {
             return AuthApiActions.loadAuthFromStorageSuccess({ user: response.data! });
           }),
           catchError(() => {
-            return of(AuthApiActions.logoutSuccess());
+            return of(AuthApiActions.loadAuthFromStorageFailure());
           })
         );
       })

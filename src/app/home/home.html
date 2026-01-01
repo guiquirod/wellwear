@@ -1,11 +1,21 @@
 <div class="home">
   <app-generic-toast></app-generic-toast>
+  @if (loading$ | async) {
+  <app-spinner></app-spinner>
+  } @else if (error$ | async) {
+  <app-error-view></app-error-view>
+  } @else {
   <section class="home__wrapper">
     <app-context-header></app-context-header>
     <app-section-title [title]="'Conjuntos del día'"></app-section-title>
     <div class="home__outfits">
       @for (outfit of todayOutfits$ | async; track outfit.id) {
-      <app-product-container [title]="'Conjunto ' + ($index + 1)" [garments]="outfit.garments">
+      <app-product-container
+        [title]="'Conjunto ' + ($index + 1)"
+        [garments]="outfit.garments"
+        [showDeleteButton]="true"
+        (deleteClick)="deleteOutfitForToday(outfit.id)"
+      >
       </app-product-container>
       } @empty { @if (hasLessThanTwoGarments$ | async) {
       <div class="home__empty-container">
@@ -67,4 +77,5 @@
   <app-garment-form [open]="showGarmentForm" (close)="closeGarmentForm()"> </app-garment-form>
 
   <app-outfit-form [open]="showOutfitForm" (close)="closeOutfitForm()"> </app-outfit-form>
+  }
 </div>

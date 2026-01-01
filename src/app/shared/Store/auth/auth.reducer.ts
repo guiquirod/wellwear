@@ -5,6 +5,7 @@ export interface AuthState {
   email: string | null;
   name: string | null;
   isAuthenticated: boolean;
+  authChecked: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -13,6 +14,7 @@ export const initialState: AuthState = {
   email: null,
   name: null,
   isAuthenticated: false,
+  authChecked: false,
   loading: false,
   error: null,
 };
@@ -70,6 +72,7 @@ const _authReducer = createReducer(
 
   on(AuthApiActions.logoutSuccess, () => ({
     ...initialState,
+    authChecked: true,
   })),
 
   on(AuthApiActions.logoutFailure, (state, { error }) => ({
@@ -98,6 +101,12 @@ const _authReducer = createReducer(
     email: user.email,
     name: user.name,
     isAuthenticated: true,
+    authChecked: true,
+  })),
+
+  on(AuthApiActions.loadAuthFromStorageFailure, (state) => ({
+    ...state,
+    authChecked: true,
   }))
 );
 

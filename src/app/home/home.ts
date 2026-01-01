@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { ContextHeader } from '../shared/Components/context-header/context-header';
 import { SectionTitle } from '../shared/Components/section-title/section-title';
 import { ProductContainer } from '../shared/Components/product-container/product-container';
@@ -21,12 +21,25 @@ import { OutfitWithGarments } from '../shared/Models/outfit-with-garments.dto';
 import { GarmentActions } from '../shared/Store/garment/garment.actions';
 import { OutfitActions } from '../shared/Store/outfit/outfit.actions';
 import { AchievementActions } from '../shared/Store/achievement/achievement.actions';
-import { selectAllGarments } from '../shared/Store/garment/garment.selectors';
-import { selectAllOutfits, selectTodayOutfits } from '../shared/Store/outfit/outfit.selectors';
+import {
+  selectAllGarments,
+  selectGarmentsLoading,
+  selectGarmentsError,
+} from '../shared/Store/garment/garment.selectors';
+import {
+  selectAllOutfits,
+  selectTodayOutfits,
+  selectOutfitLoading,
+  selectOutfitError,
+} from '../shared/Store/outfit/outfit.selectors';
 import {
   selectDailyAchievements,
   selectAutomaticAchievements,
+  selectAchievementsLoading,
+  selectAchievementsError,
 } from '../shared/Store/achievement/achievement.selectors';
+import { Spinner } from '../shared/Components/spinner/spinner';
+import { ErrorView } from '../shared/Components/error-view/error-view';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +54,8 @@ import {
     OutfitForm,
     GenericToast,
     AchievementRow,
+    Spinner,
+    ErrorView,
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
@@ -58,6 +73,8 @@ export class Home implements OnInit {
   automaticAchievements$: Observable<AchievementDTO[]>;
   hasLessThanTwoGarments$: Observable<boolean>;
   hasNoOutfits$: Observable<boolean>;
+  loading$: Observable<boolean>;
+  error$: Observable<boolean>;
 
   outfitModalSections: ModalSection<OutfitWithGarments>[] = [];
 
@@ -77,6 +94,26 @@ export class Home implements OnInit {
     this.hasLessThanTwoGarments$ = this.garments$.pipe(map((garments) => garments.length < 2));
     this.hasNoOutfits$ = this.outfits$.pipe(map((outfits) => outfits.length === 0));
     this.automaticAchievements$ = this.store.select(selectAutomaticAchievements);
+    this.loading$ = combineLatest([
+      this.store.select(selectGarmentsLoading),
+      this.store.select(selectOutfitLoading),
+      this.store.select(selectAchievementsLoading),
+    ]).pipe(
+      map(
+        ([garmentsLoading, outfitLoading, achievementsLoading]) =>
+          garmentsLoading || outfitLoading || achievementsLoading
+      )
+    );
+    this.error$ = combineLatest([
+      this.store.select(selectGarmentsError),
+      this.store.select(selectOutfitError),
+      this.store.select(selectAchievementsError),
+    ]).pipe(
+      map(
+        ([garmentsError, outfitError, achievementsError]) =>
+          garmentsError || outfitError || achievementsError
+      )
+    );
 
     this.outfits$.subscribe((outfits) => {
       this.allOutfitsWithGarments = outfits;
@@ -114,6 +151,10 @@ export class Home implements OnInit {
   selectOutfitForToday(outfit: OutfitWithGarments) {
     this.store.dispatch(OutfitActions.wearOutfit({ id: outfit.id }));
     this.closeOutfitModal();
+  }
+
+  deleteOutfitForToday(outfitId: string) {
+    this.store.dispatch(OutfitActions.unwearOutfit({ id: outfitId }));
   }
 
   addGarment() {

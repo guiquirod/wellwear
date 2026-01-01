@@ -9,7 +9,6 @@
   display: flex;
   width: 100%;
   min-width: 300px;
-  max-width: 380px;
   height: 62px;
   align-items: center;
   justify-content: space-between;
@@ -21,6 +20,10 @@
   position: relative;
   overflow: hidden;
   transition: color 0.4s ease;
+
+  @media (min-width: $maxSMobileWidth) {
+    max-width: 380px;
+  }
 
   &::before {
     content: '';

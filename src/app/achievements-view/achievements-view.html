@@ -1,5 +1,10 @@
 <div class="achievements-view">
   <app-generic-toast></app-generic-toast>
+  @if (loading$ | async) {
+  <app-spinner></app-spinner>
+  } @else if (error$ | async) {
+  <app-error-view></app-error-view>
+  } @else {
   <section class="achievements-view__wrapper">
     <div class="achievements-view__level">
       <span class="achievements-view__corner"></span>
@@ -74,4 +79,5 @@
       </div>
     </div>
   </section>
+  }
 </div>

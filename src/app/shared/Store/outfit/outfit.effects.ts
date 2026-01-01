@@ -142,16 +142,24 @@ export class OutfitEffects {
       ofType(OutfitActions.deleteOutfit),
       exhaustMap(({ id }) =>
         this.outfitService.deleteOutfit(id).pipe(
-          map(() => {
-            this.sharedService.showToast('Conjunto eliminado correctamente', true);
-            return OutfitApiActions.deleteOutfitSuccess({ id });
-          }),
+          map(() => OutfitApiActions.deleteOutfitSuccess({ id })),
           catchError((error) =>
             of(OutfitApiActions.deleteOutfitFailure({ error: error.error?.message }))
           )
         )
       )
     )
+  );
+
+  deleteOutfitSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OutfitApiActions.deleteOutfitSuccess),
+        tap(() => {
+          this.sharedService.showToast('Conjunto eliminado correctamente', true);
+        })
+      ),
+    { dispatch: false }
   );
 
   deleteOutfitFailure$ = createEffect(
@@ -170,10 +178,7 @@ export class OutfitEffects {
       ofType(OutfitActions.wearOutfit),
       exhaustMap(({ id }) =>
         this.outfitService.wearOutfit(id).pipe(
-          map(() => {
-            this.sharedService.showToast('¡Conjunto añadido a hoy!', true);
-            return OutfitApiActions.wearOutfitSuccess({ id });
-          }),
+          map(() => OutfitApiActions.wearOutfitSuccess({ id })),
           catchError((error) =>
             of(OutfitApiActions.wearOutfitFailure({ error: error.error?.message }))
           )
@@ -185,6 +190,9 @@ export class OutfitEffects {
   wearOutfitSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitApiActions.wearOutfitSuccess),
+      tap(() => {
+        this.sharedService.showToast('¡Conjunto añadido a hoy!', true);
+      }),
       map(() => OutfitActions.loadOutfitsByDate({}))
     )
   );
@@ -203,26 +211,26 @@ export class OutfitEffects {
   unwearOutfit$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OutfitActions.unwearOutfit),
-      exhaustMap(({ id, date }) =>
-        this.outfitService.unwearOutfit(id, date).pipe(
-          map(() => OutfitApiActions.unwearOutfitSuccess({ id, date })),
+      exhaustMap(({ id, date }) => {
+        const wornDate = date ?? new Date().toISOString().split('T')[0];
+        return this.outfitService.unwearOutfit(id, wornDate).pipe(
+          map(() => OutfitApiActions.unwearOutfitSuccess({ id, date: wornDate })),
           catchError((error) =>
             of(OutfitApiActions.unwearOutfitFailure({ error: error.error?.message }))
           )
-        )
-      )
+        );
+      })
     )
   );
 
-  unwearOutfitSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(OutfitApiActions.unwearOutfitSuccess),
-        tap(() => {
-          this.sharedService.showToast('Conjunto eliminado de hoy', true);
-        })
-      ),
-    { dispatch: false }
+  unwearOutfitSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(OutfitApiActions.unwearOutfitSuccess),
+      tap(() => {
+        this.sharedService.showToast('Conjunto eliminado de hoy', true);
+      }),
+      map(() => OutfitActions.loadOutfitsByDate({}))
+    )
   );
 
   unwearOutfitFailure$ = createEffect(

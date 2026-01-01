@@ -25,5 +25,6 @@ export const AuthApiActions = createActionGroup({
     'Delete User Success': emptyProps(),
     'Delete User Failure': props<{ error: string }>(),
     'Load Auth From Storage Success': props<{ user: UserDTO }>(),
+    'Load Auth From Storage Failure': emptyProps(),
   },
 });

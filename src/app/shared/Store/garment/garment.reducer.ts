@@ -4,13 +4,15 @@ import { GarmentDTO } from '../../Models/garment.dto';
 
 export interface GarmentState {
   garments: GarmentDTO[];
-  loading: boolean;
+  firstLoad: boolean;
+  firstLoadError: boolean;
   error: string | null;
 }
 
 export const initialState: GarmentState = {
   garments: [],
-  loading: false,
+  firstLoad: true,
+  firstLoadError: false,
   error: null,
 };
 
@@ -19,77 +21,68 @@ const _garmentReducer = createReducer(
 
   on(GarmentActions.loadGarments, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(GarmentApiActions.loadGarmentsSuccess, (state, { garments }) => ({
     ...state,
     garments,
-    loading: false,
+    firstLoad: false,
     error: null,
   })),
 
   on(GarmentApiActions.loadGarmentsFailure, (state, { error }) => ({
     ...state,
-    loading: false,
+    firstLoad: false,
+    firstLoadError: true,
     error,
   })),
 
   on(GarmentActions.createGarment, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(GarmentApiActions.createGarmentSuccess, (state, { garment }) => ({
     ...state,
     garments: [...state.garments, garment],
-    loading: false,
     error: null,
   })),
 
   on(GarmentApiActions.createGarmentFailure, (state, { error }) => ({
     ...state,
-    loading: false,
     error,
   })),
 
   on(GarmentActions.updateGarment, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(GarmentApiActions.updateGarmentSuccess, (state, { garment }) => ({
     ...state,
     garments: state.garments.map((g) => (g.id === garment.id ? garment : g)),
-    loading: false,
     error: null,
   })),
 
   on(GarmentApiActions.updateGarmentFailure, (state, { error }) => ({
     ...state,
-    loading: false,
     error,
   })),
 
   on(GarmentActions.deleteGarment, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(GarmentApiActions.deleteGarmentSuccess, (state, { id }) => ({
     ...state,
     garments: state.garments.filter((g) => g.id !== id),
-    loading: false,
     error: null,
   })),
 
   on(GarmentApiActions.deleteGarmentFailure, (state, { error }) => ({
     ...state,
-    loading: false,
     error,
   }))
 );

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { ProductContainer } from '../shared/Components/product-container/product-container';
 import { ProductImage } from '../shared/Components/product-image/product-image';
 import { SectionTitle } from '../shared/Components/section-title/section-title';
@@ -17,9 +17,19 @@ import { OutfitWithGarments } from '../shared/Models/outfit-with-garments.dto';
 import { GarmentType } from '../shared/Enum/garment-type';
 import { GarmentActions } from '../shared/Store/garment/garment.actions';
 import { OutfitActions } from '../shared/Store/outfit/outfit.actions';
-import { selectAllGarments } from '../shared/Store/garment/garment.selectors';
-import { selectAllOutfits } from '../shared/Store/outfit/outfit.selectors';
+import {
+  selectAllGarments,
+  selectGarmentsLoading,
+  selectGarmentsError,
+} from '../shared/Store/garment/garment.selectors';
+import {
+  selectAllOutfits,
+  selectOutfitLoading,
+  selectOutfitError,
+} from '../shared/Store/outfit/outfit.selectors';
 import { GenericToast } from '../shared/Components/generic-toast/generic-toast';
+import { Spinner } from '../shared/Components/spinner/spinner';
+import { ErrorView } from '../shared/Components/error-view/error-view';
 
 export interface GarmentsByType {
   type: GarmentType;
@@ -39,6 +49,8 @@ export interface GarmentsByType {
     ConfirmationModal,
     OutfitForm,
     GarmentForm,
+    Spinner,
+    ErrorView,
   ],
   templateUrl: './wardrobe.html',
   styleUrl: './wardrobe.scss',
@@ -47,6 +59,8 @@ export class Wardrobe implements OnInit {
   garments$: Observable<GarmentDTO[]>;
   outfits$: Observable<OutfitWithGarments[]>;
   garmentsByType$: Observable<GarmentsByType[]>;
+  loading$: Observable<boolean>;
+  error$: Observable<boolean>;
 
   showConfirmationModal = false;
   showGarmentConfirmationModal = false;
@@ -80,6 +94,14 @@ export class Wardrobe implements OnInit {
   constructor(private store: Store) {
     this.garments$ = this.store.select(selectAllGarments);
     this.outfits$ = this.store.select(selectAllOutfits);
+    this.loading$ = combineLatest([
+      this.store.select(selectGarmentsLoading),
+      this.store.select(selectOutfitLoading),
+    ]).pipe(map(([garmentsLoading, outfitsLoading]) => garmentsLoading || outfitsLoading));
+    this.error$ = combineLatest([
+      this.store.select(selectGarmentsError),
+      this.store.select(selectOutfitError),
+    ]).pipe(map(([garmentsError, outfitsError]) => garmentsError || outfitsError));
 
     this.garmentsByType$ = this.garments$.pipe(
       map((garments) =>

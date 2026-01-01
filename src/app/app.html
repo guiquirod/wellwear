@@ -1,7 +1,9 @@
-@if (showNavigation) {
-<app-header-nav></app-header-nav>
-}
-<router-outlet></router-outlet>
-@if (showNavigation) {
-<app-footer></app-footer>
+@if (authChecked$ | async) {
+  @if (showNavAndFooter) {
+    <app-header-nav></app-header-nav>
+  }
+  <router-outlet></router-outlet>
+  @if (showNavAndFooter) {
+    <app-footer></app-footer>
+  }
 }

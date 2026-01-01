@@ -15,10 +15,10 @@ export const selectTodayOutfits = createSelector(
 
 export const selectOutfitLoading = createSelector(
   selectOutfitState,
-  (state: OutfitState) => state.loading
+  (state: OutfitState) => state.firstLoad
 );
 
 export const selectOutfitError = createSelector(
   selectOutfitState,
-  (state: OutfitState) => state.error
+  (state: OutfitState) => state.firstLoadError
 );

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 import { SharedService } from './shared.service';
 import { AchievementDTO } from '../Models/achievement.dto';
 import { ApiResponse } from '../Models/api-response.dto';
@@ -13,6 +13,7 @@ import { UserLevelDTO } from '../Models/user-level.dto';
 export class AchievementService {
   private urlWellwearApi: string;
   private controller: string;
+  private readonly timeout = 15000;
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
@@ -24,7 +25,7 @@ export class AchievementService {
       .get<ApiResponse<UserLevelDTO>>(`${this.urlWellwearApi}/get-user-level.php`, {
         withCredentials: true,
       })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   getAchievements(): Observable<ApiResponse<AchievementDTO[]>> {
@@ -32,7 +33,7 @@ export class AchievementService {
       .get<ApiResponse<AchievementDTO[]>>(`${this.urlWellwearApi}/get-achievements.php`, {
         withCredentials: true,
       })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   completeAchievement(achievementId: number): Observable<ApiResponse<UserLevelDTO>> {
@@ -42,7 +43,7 @@ export class AchievementService {
         { achievementId },
         { withCredentials: true }
       )
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   checkAutomaticAchievements(): Observable<ApiResponse<{ completedAchievements: number[] }>> {
@@ -52,6 +53,6 @@ export class AchievementService {
         {},
         { withCredentials: true }
       )
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 }

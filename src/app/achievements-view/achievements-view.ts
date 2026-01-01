@@ -14,11 +14,15 @@ import {
   selectMonthlyAchievements,
   selectAutomaticAchievements,
   selectUserLevel,
+  selectAchievementsLoading,
+  selectAchievementsError,
 } from '../shared/Store/achievement/achievement.selectors';
+import { Spinner } from '../shared/Components/spinner/spinner';
+import { ErrorView } from '../shared/Components/error-view/error-view';
 
 @Component({
   selector: 'app-achievements-view',
-  imports: [CommonModule, SectionTitle, AchievementRow, GenericToast],
+  imports: [CommonModule, SectionTitle, AchievementRow, GenericToast, Spinner, ErrorView],
   templateUrl: './achievements-view.html',
   styleUrl: './achievements-view.scss',
 })
@@ -29,6 +33,8 @@ export class AchievementsView implements OnInit {
   monthlyAchievemenmts$: Observable<AchievementDTO[]>;
   automaticAchievements$: Observable<AchievementDTO[]>;
   userName$: Observable<string | null>;
+  loading$: Observable<boolean>;
+  error$: Observable<boolean>;
 
   constructor(private store: Store<{ auth: { name: string | null } }>) {
     this.userLevel$ = this.store.select(selectUserLevel);
@@ -37,6 +43,8 @@ export class AchievementsView implements OnInit {
     this.monthlyAchievemenmts$ = this.store.select(selectMonthlyAchievements);
     this.automaticAchievements$ = this.store.select(selectAutomaticAchievements);
     this.userName$ = this.store.select((state) => state.auth.name);
+    this.loading$ = this.store.select(selectAchievementsLoading);
+    this.error$ = this.store.select(selectAchievementsError);
   }
 
   ngOnInit() {

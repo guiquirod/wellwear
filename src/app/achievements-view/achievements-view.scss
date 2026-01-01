@@ -16,7 +16,7 @@
 
   &__level {
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
     height: 150px;
@@ -94,7 +94,7 @@
 
   &__list {
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     gap: 1rem;
   }
 }

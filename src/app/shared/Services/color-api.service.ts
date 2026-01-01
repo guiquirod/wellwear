@@ -48,33 +48,15 @@ export class ColorApiService {
       .pipe(map((response) => response.colors.map((color) => color.hex.clean.toLowerCase())));
   }
 
-  private getGarmentDistanceToScheme(garment: GarmentDTO, schemeColors: string[]): number {
+  private getGarmentDistanceToScheme(garmentColor: string, schemeColors: string[]): number {
     let minDistance = Infinity;
 
     for (const schemeColor of schemeColors) {
-      const mainDistance = this.calculateColorDistance(garment.mainColor, schemeColor);
+      const mainDistance = this.calculateColorDistance(garmentColor, schemeColor);
       minDistance = Math.min(minDistance, mainDistance);
     }
 
     return minDistance;
-  }
-
-  private findClosestGarmentByColor(schemeColors: string[], garments: GarmentDTO[]): string | null {
-    if (garments.length === 0) return null;
-
-    let closestGarmentId: string | null = null;
-    let minDistance = Infinity;
-
-    for (const garment of garments) {
-      const distance = this.getGarmentDistanceToScheme(garment, schemeColors);
-
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestGarmentId = garment.id;
-      }
-    }
-
-    return closestGarmentId;
   }
 
   private hasMatchingSeason(garment: GarmentDTO, seasons: string[]): boolean {
@@ -98,7 +80,24 @@ export class ColorApiService {
     }
 
     return this.getColorScheme(selectedGarment.mainColor).pipe(
-      map((schemeColors) => this.findClosestGarmentByColor(schemeColors, garmentsPool)),
+      map((schemeColors) => {
+        const avgWorn = garmentsPool.reduce((sum, g) => sum + g.worn, 0) / garmentsPool.length;
+        let bestGarment = garmentsPool[0];
+        let bestScore = Infinity;
+
+        for (const garment of garmentsPool) {
+          const colorDistance = this.getGarmentDistanceToScheme(garment.mainColor, schemeColors);
+          const overlyWorn = garment.worn > avgWorn ? garment.worn - avgWorn : 0;
+          const finalScore = colorDistance + overlyWorn;
+
+          if (finalScore < bestScore) {
+            bestScore = finalScore;
+            bestGarment = garment;
+          }
+        }
+
+        return bestGarment.id;
+      }),
       catchError(() => of(null))
     );
   }

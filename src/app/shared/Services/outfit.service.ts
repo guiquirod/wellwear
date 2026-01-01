@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 import { SharedService } from './shared.service';
 import { OutfitDTO } from '../Models/outfit.dto';
 import { OutfitWithGarments } from '../Models/outfit-with-garments.dto';
@@ -13,6 +13,7 @@ import { ApiResponse } from '../Models/api-response.dto';
 export class OutfitService {
   private urlWellwearApi: string;
   private controller: string;
+  private readonly timeout = 15000;
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
@@ -26,7 +27,7 @@ export class OutfitService {
         { garmentIds },
         { withCredentials: true }
       )
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   getOutfits(date?: string): Observable<ApiResponse<OutfitWithGarments[]>> {
@@ -35,7 +36,7 @@ export class OutfitService {
       : `${this.urlWellwearApi}/get-outfits.php`;
     return this.http
       .get<ApiResponse<OutfitWithGarments[]>>(url, { withCredentials: true })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   updateOutfit(id: string, garmentIds: string[]): Observable<ApiResponse<OutfitDTO>> {
@@ -48,7 +49,7 @@ export class OutfitService {
         },
         { withCredentials: true }
       )
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   deleteOutfit(id: string): Observable<ApiResponse> {
@@ -57,22 +58,26 @@ export class OutfitService {
         body: { outfitId: id },
         withCredentials: true,
       })
-      .pipe(catchError(this.sharedService.handleError));
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   wearOutfit(id: string, date?: string): Observable<ApiResponse> {
     const wornDate = date ?? new Date().toISOString().split('T')[0];
-    return this.http.post<ApiResponse>(
-      `${this.urlWellwearApi}/wear-outfit.php`,
-      { outfitId: id, wornDate },
-      { withCredentials: true }
-    );
+    return this.http
+      .post<ApiResponse>(
+        `${this.urlWellwearApi}/wear-outfit.php`,
+        { outfitId: id, wornDate },
+        { withCredentials: true }
+      )
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 
   unwearOutfit(id: string, date: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(`${this.urlWellwearApi}/wear-outfit.php`, {
-      body: { outfitId: id, wornDate: date },
-      withCredentials: true,
-    });
+    return this.http
+      .delete<ApiResponse>(`${this.urlWellwearApi}/wear-outfit.php`, {
+        body: { outfitId: id, wornDate: date },
+        withCredentials: true,
+      })
+      .pipe(timeout(this.timeout), catchError(this.sharedService.handleError));
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { AppState } from '../../app.reducers';
 
 @Injectable({
@@ -17,10 +17,11 @@ export class LoggedGuard implements CanActivate {
 
   private isLogged(): Observable<boolean> {
     return this.store
-      .select((state) => state.auth.isAuthenticated)
+      .select((state) => state.auth)
       .pipe(
-        map((isAuthenticated) => {
-          if (isAuthenticated) {
+        filter((auth) => auth.authChecked),
+        map((auth) => {
+          if (auth.isAuthenticated) {
             return true;
           } else {
             this.router.navigate(['']);

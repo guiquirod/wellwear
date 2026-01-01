@@ -1,5 +1,10 @@
 <app-generic-toast></app-generic-toast>
 <div class="wardrobe">
+  @if (loading$ | async) {
+  <app-spinner></app-spinner>
+  } @else if (error$ | async) {
+  <app-error-view></app-error-view>
+  } @else {
   <section class="wardrobe__wrapper">
     <app-section-title [title]="'Mis Conjuntos'"></app-section-title>
     <app-button [title]="'Crear Nuevo Conjunto'" (action)="createOrUpdateOutfit()"> </app-button>
@@ -72,4 +77,5 @@
     (close)="closeGarmentForm()"
   >
   </app-garment-form>
+  }
 </div>

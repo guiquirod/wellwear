@@ -6,14 +6,16 @@ import { UserLevelDTO } from '../../Models/user-level.dto';
 export interface AchievementState {
   userLevel: UserLevelDTO | null;
   achievements: AchievementDTO[];
-  loading: boolean;
+  firstLoad: boolean;
+  firstLoadError: boolean;
   error: string | null;
 }
 
 export const initialState: AchievementState = {
   userLevel: null,
   achievements: [],
-  loading: false,
+  firstLoad: true,
+  firstLoadError: false,
   error: null,
 };
 
@@ -22,58 +24,55 @@ const _achievementReducer = createReducer(
 
   on(AchievementActions.loadUserLevel, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(AchievementApiActions.loadUserLevelSuccess, (state, { userLevel }) => ({
     ...state,
     userLevel: userLevel,
-    loading: false,
+    firstLoad: false,
     error: null,
   })),
 
   on(AchievementApiActions.loadUserLevelFailure, (state, { error }) => ({
     ...state,
-    loading: false,
+    firstLoad: false,
+    firstLoadError: true,
     error,
   })),
 
   on(AchievementActions.loadAchievements, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(AchievementApiActions.loadAchievementsSuccess, (state, { achievements }) => ({
     ...state,
     achievements,
-    loading: false,
+    firstLoad: false,
     error: null,
   })),
 
   on(AchievementApiActions.loadAchievementsFailure, (state, { error }) => ({
     ...state,
-    loading: false,
+    firstLoad: false,
+    firstLoadError: true,
     error,
   })),
 
   on(AchievementActions.completeAchievement, (state) => ({
     ...state,
-    loading: true,
     error: null,
   })),
 
   on(AchievementApiActions.completeAchievementSuccess, (state, { userLevel }) => ({
     ...state,
     userLevel: userLevel,
-    loading: false,
     error: null,
   })),
 
   on(AchievementApiActions.completeAchievementFailure, (state, { error }) => ({
     ...state,
-    loading: false,
     error,
   }))
 );

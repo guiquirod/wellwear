@@ -32,10 +32,10 @@ export const selectAutomaticAchievements = createSelector(selectAllAchievements,
 
 export const selectAchievementsLoading = createSelector(
   selectAchievementState,
-  (state: AchievementState) => state.loading
+  (state: AchievementState) => state.firstLoad
 );
 
 export const selectAchievementsError = createSelector(
   selectAchievementState,
-  (state: AchievementState) => state.error
+  (state: AchievementState) => state.firstLoadError
 );

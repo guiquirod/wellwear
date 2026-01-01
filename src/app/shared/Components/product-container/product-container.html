@@ -22,3 +22,6 @@
   <span class="product-container__corner--alt"> </span>
   }
 </div>
+@if (showDeleteButton) {
+<app-button [title]="'Quitar conjunto del día de hoy'" (action)="handleDelete()"></app-button>
+}

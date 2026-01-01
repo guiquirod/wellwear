@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 import { SharedService } from './shared.service';
 import { AuthDTO } from '../Models/auth.dto';
 import { UserDTO } from '../Models/user.dto';
@@ -13,6 +13,7 @@ import { ApiResponse } from '../Models/api-response.dto';
 export class AuthService {
   private urlWellwearApi: string;
   private controller: string;
+  private readonly timeout = 15000;
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'wellwear-api';
@@ -24,7 +25,10 @@ export class AuthService {
       .post<ApiResponse<UserDTO>>(`${this.urlWellwearApi}/login.php`, credentials, {
         withCredentials: true,
       })
-      .pipe(catchError((error) => this.sharedService.handleError(error)));
+      .pipe(
+        timeout(this.timeout),
+        catchError((error) => this.sharedService.handleError(error))
+      );
   }
 
   register(credentials: AuthDTO): Observable<ApiResponse<UserDTO>> {
@@ -32,7 +36,10 @@ export class AuthService {
       .post<ApiResponse<UserDTO>>(`${this.urlWellwearApi}/register.php`, credentials, {
         withCredentials: true,
       })
-      .pipe(catchError((error) => this.sharedService.handleError(error)));
+      .pipe(
+        timeout(this.timeout),
+        catchError((error) => this.sharedService.handleError(error))
+      );
   }
 
   checkSessionState(): Observable<ApiResponse<UserDTO>> {
@@ -40,18 +47,27 @@ export class AuthService {
       .get<ApiResponse<UserDTO>>(`${this.urlWellwearApi}/check-session.php`, {
         withCredentials: true,
       })
-      .pipe(catchError((error) => this.sharedService.handleError(error)));
+      .pipe(
+        timeout(this.timeout),
+        catchError((error) => this.sharedService.handleError(error))
+      );
   }
 
   logout(): Observable<ApiResponse> {
     return this.http
       .post<ApiResponse>(`${this.urlWellwearApi}/logout.php`, {}, { withCredentials: true })
-      .pipe(catchError((error) => this.sharedService.handleError(error)));
+      .pipe(
+        timeout(this.timeout),
+        catchError((error) => this.sharedService.handleError(error))
+      );
   }
 
   deleteUser(): Observable<ApiResponse> {
     return this.http
       .post<ApiResponse>(`${this.urlWellwearApi}/delete-user.php`, {}, { withCredentials: true })
-      .pipe(catchError((error) => this.sharedService.handleError(error)));
+      .pipe(
+        timeout(this.timeout),
+        catchError((error) => this.sharedService.handleError(error))
+      );
   }
 }

@@ -10,10 +10,10 @@ export const selectAllGarments = createSelector(
 
 export const selectGarmentsLoading = createSelector(
   selectGarmentState,
-  (state: GarmentState) => state.loading
+  (state: GarmentState) => state.firstLoad
 );
 
 export const selectGarmentsError = createSelector(
   selectGarmentState,
-  (state: GarmentState) => state.error
+  (state: GarmentState) => state.firstLoadError
 );
