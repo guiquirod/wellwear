@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { AppState } from '../../app.reducers';
 
 @Injectable({
@@ -11,23 +11,12 @@ import { AppState } from '../../app.reducers';
 export class LoggedGuard implements CanActivate {
   constructor(private store: Store<AppState>, private router: Router) {}
 
-  canActivate(): Observable<boolean> {
-    return this.isLogged();
-  }
-
-  private isLogged(): Observable<boolean> {
+  canActivate(): Observable<boolean | UrlTree> {
     return this.store
       .select((state) => state.auth)
       .pipe(
         filter((auth) => auth.authChecked),
-        map((auth) => {
-          if (auth.isAuthenticated) {
-            return true;
-          } else {
-            this.router.navigate(['']);
-            return false;
-          }
-        })
+        map((auth) => auth.isAuthenticated ? true : this.router.createUrlTree(['/landing'])),
       );
   }
 }

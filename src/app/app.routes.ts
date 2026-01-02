@@ -5,6 +5,11 @@ import { NotLoggedGuard } from './shared/Guards/not-logged.guard';
 export const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+  },
+  {
+    path: 'landing',
     loadComponent: () => import('./landing/landing').then((mod) => mod.Landing),
     canActivate: [NotLoggedGuard],
   },
@@ -25,8 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'achievements',
-    loadComponent: () =>
-      import('./achievements-view/achievements-view').then((mod) => mod.AchievementsView),
+    loadComponent: () => import('./achievements-view/achievements-view').then((mod) => mod.AchievementsView),
     canActivate: [LoggedGuard],
   },
 ];

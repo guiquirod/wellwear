@@ -99,7 +99,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.logoutSuccess),
         tap(() => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/landing');
         })
       ),
     { dispatch: false }
@@ -135,7 +135,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.deleteUserSuccess),
         tap(() => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/landing');
         })
       ),
     { dispatch: false }

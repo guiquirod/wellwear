@@ -271,9 +271,7 @@ export class GarmentForm implements OnInit, OnChanges {
           this.form.controls.mainColor.setValue(colors[0].hex);
           this.changeDetectorRef.markForCheck();
         }
-      } catch (error) {
-        console.log('No se pudo extraer el color', error);
-      }
+      } catch {}
     };
     reader.readAsDataURL(file);
   }
