@@ -88,6 +88,7 @@ const _authReducer = createReducer(
 
   on(AuthApiActions.deleteUserSuccess, () => ({
     ...initialState,
+    authChecked: true,
   })),
 
   on(AuthApiActions.deleteUserFailure, (state, { error }) => ({
